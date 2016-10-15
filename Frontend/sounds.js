@@ -14,12 +14,12 @@ function Sound(src){
 function Note(instrument, tone){
 	//Load an instrument from the online repo
 	//Do this by entering your own URL or just using the default https://gleitz.github.io/midi-js-soundfonts/
-	var instr = Soundfont.instrument(instrument); 
+	this.instr = Soundfont.instrument(instrument); 
 	//e.g. 'C4', 'G3', etc.
-	var t = tone;
+	this.t = tone;
 
 	//guess what this does......
-	function play(){
-		instr.play(t);
+	this.play = function(){
+		this.instr.play(this.t);
 	}
 }
