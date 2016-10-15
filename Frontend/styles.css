@@ -20,7 +20,8 @@ body {
 .instrument {
     position: relative;
     height: 60px;
-    border-bottom: 4px solid rgba(0, 0, 0, .1);
+    /*border-bottom: 4px solid rgba(0, 0, 0, .1);*/
+    margin-bottom: 4px;
 }
 
 .instrumentSettings {

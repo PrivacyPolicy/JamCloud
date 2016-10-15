@@ -1,4 +1,4 @@
-var Soundfont = require('soundfont-player.js')
+//var Soundfont = require('soundfont-player')
 
 //General audio file.
 function Sound(src){
