@@ -12,12 +12,9 @@ PRIMARY KEY(ID)
 )";
 $def_objects_table = "CREATE TABLE Objects (
 	ID int(11) AUTO_INCREMENT,
-	USER int(11),
+	IP varchar(256),
 	DATA varchar(4096),
-	PRIMARY KEY(ID),
-	FOREIGN KEY(USER)
-		REFERENCES Users(ID)
-		ON DELETE CASCADE
+	PRIMARY KEY(ID)
 	)";
 $def_files_table = "CREATE TABLE Files (
 	ID int(11) AUTO_INCREMENT,

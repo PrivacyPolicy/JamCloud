@@ -1,5 +1,3 @@
-var Soundfont = require('./soundfont-player.js')
-
 var ac = new AudioContext();
 
 //General audio file.
