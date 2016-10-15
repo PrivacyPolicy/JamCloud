@@ -1,4 +1,3 @@
-yo
 <?php
  /* This form is interacted with via javascript
  a clip type command will be initiated to interact with the database
@@ -11,9 +10,10 @@ yo
 
 	/* create an object and put in data if necessary */
 	function createObject($id, $data){
-		$result = mysqli_query($link, "SELECT * FROM Objects WHERE ID=$g_id");
+		global $link;
+		$result = mysqli_query($link, "SELECT * FROM Objects WHERE ID=$id");
 		if(mysqli_fetch_array($result) == false){
-			mysqli_query($link, "INSERT INTO Objects (ID, IP, DATA) VALUES($id, NULL, $data)");
+			mysqli_query($link, "INSERT INTO Objects (ID, DATA) VALUES($id, $data);");
 		
 			return true;
 		}else{
@@ -22,6 +22,7 @@ yo
 	}
 	/* Delete object completely*/
 	function deleteObject($id){
+		global $link;
 		$result = mysqli_query($link, "SELECT * FROM Objects WHERE ID=$g_id and IP=NULL");
 		if(mysqli_fetch_array($result) !== false){
 			mysqli_query($link, "DELETE FROM Objects WHERE ID=$g_id");
@@ -30,7 +31,7 @@ yo
 			return false;
 		}
 	}
-
+	$rval = "NOACTION";
 	if($action=="CREATE"){
 		$rval = createObject($g_id, $g_data);
 	}else if($action=="DELETE"){
@@ -40,5 +41,3 @@ yo
 	echo($rval);
 
 ?>
-</body>
-</html>
