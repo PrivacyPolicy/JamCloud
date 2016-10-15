@@ -11,10 +11,12 @@
 	/* create an object and put in data if necessary */
 	function createObject($id, $data){
 		global $link;
-		$result = mysqli_query($link, "SELECT * FROM Objects WHERE ID=$id");
+		$result = mysqli_query($link, "SELECT * FROM Objects WHERE ID=$id;");
 		if(mysqli_fetch_array($result) == false){
-			mysqli_query($link, "INSERT INTO Objects (ID, DATA) VALUES($id, $data);");
+			$query = "INSERT INTO Objects (ID, DATA) VALUES($id, $data);";
+			$dp = mysqli_query($link, $query);
 		
+			var_dump($dp);
 			return true;
 		}else{
 			return false;
