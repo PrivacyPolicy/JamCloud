@@ -8,7 +8,7 @@
 	$g_id = $_POST['OBJECT'];
 	$g_data = mysqli_real_escape_string($link, $_POST['DATA']);
 
-	function makeStatus(code,msg){
+	function makeStatus($code,$msg){
 		return "{\"status\":\"$code\", \"message\":\"$msg\"}";
 	}
 	/* create an object and put in data if necessary */
@@ -42,7 +42,7 @@
 			mysqli_query($link, "UPDATE Objects SET IP=$ip WHERE ID=$id");
 			return makeStatus(true,"Request permission granted");
 		}else{
-			return false;
+			return makeStatus(false,"Request permission denied");
 		}
 	}
 	function quitEditObject($id, $ip){
@@ -50,9 +50,9 @@
 		$result = mysqli_query($link, "SELECT * FROM Objects WHERE ID=$id and IP=$ip");
 		if(mysqli_fetch_array($result) !== false){
 			mysqli_query($link, "UPDATE Objects SET IP=NULL WHERE ID=$id");
-			return true;
+			return makeStatus(true, "Permission resigned");
 		}else{
-			return false;
+			return makeStatus(false, "Permission for object $id is not granted to $ip");
 		}
 	}
 		
@@ -60,9 +60,9 @@
 		global $link;
 		$result = mysqli_query($link, "SELECT * form oBJECTS where ID=$id and IP=$ip");
 		if(mysqli_fetch_array($result)!==false){
-			mysqli_query($link, "UPDATE OBJECTS SET DATA=$data WHERE ID=$id"); return true;
+			mysqli_query($link, "UPDATE OBJECTS SET DATA=$data WHERE ID=$id"); return makeStatus(true, "Updated object $id");
 		}else{
-			return false;
+			return makeStatus(false, "Failed to update object $id, maybe $ip does not have permission or $id does not exist");
 		}
 	}
 	$rval = "NOACTION";
