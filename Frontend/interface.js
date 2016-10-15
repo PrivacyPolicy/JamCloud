@@ -1,7 +1,7 @@
 var timeScale = 100; // 100 px / second
                      // future: px/beats
-var instrumentTypes = ["Piano", "Guitar", "Drum", 
-    "Electric Guitar"];
+var instrumentTypes = ["acoustic_grand_piano", "acoustic_guitar_steel", "Drum", 
+    "acoustic_guitar_steel"];
 var data = {
     instruments: [
         {
