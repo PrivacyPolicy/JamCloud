@@ -4,9 +4,7 @@ hey
 <?php
 
 /* This file exists to create the database tables automatically */
-$db_name = "JamCloud";
-$sql_username = "root";
-$sql_password = "hunter2";
+include_once("./session.php");
 $def_users_table = "CREATE TABLE Users (
 ID int(11) AUTO_INCREMENT,
 IP char(4),
@@ -26,16 +24,7 @@ $def_files_table = "CREATE TABLE Files (
 	FP varchar(256),
 	PRIMARY KEY(ID)
 	)";
-$link = mysqli_connect("localhost", $sql_username, $sql_password);
 
-if(!$link){
-	die("Error connecting to database\n");
-}
-$database = mysqli_select_db($link, "$db_name");
-echo("kk\n<br>\n");
-if(!$database){
-	die("No database found\n");
-}
 echo("ho\n<br>\n");
 $result = mysqli_query($link, "SHOW TABLES LIKE 'Users'");
 echo("Checking\n<br>\n");
