@@ -8,19 +8,20 @@
 	$g_id = $_POST['OBJECT'];
 	$g_data = mysqli_real_escape_string($link, $_POST['DATA']);
 
+	function makeStatus(code,msg){
+		return "{\"status\":\"$code\", \"message\":\"$msg\"}";
+	}
 	/* create an object and put in data if necessary */
 	function createObject($id, $data){
 		global $link;
 		$result = mysqli_query($link, "SELECT * FROM Objects WHERE ID=$id;");
 		if(mysqli_fetch_array($result) == false){
 			$query = "INSERT INTO Objects (ID, DATA) VALUES($id, '$data');";
-			echo($query);
 			$dp = mysqli_query($link, $query);
 		
-			var_dump($dp);
-			return true;
+			return makeStatus(true, "Created object using query($query)");
 		}else{
-			return false;
+			return makeStatus(false, "Failed to create object");
 		}
 	}
 	/* Delete object completely*/
@@ -29,9 +30,9 @@
 		$result = mysqli_query($link, "SELECT * FROM Objects WHERE ID=$id and IP=NULL");
 		if(mysqli_fetch_array($result) !== false){
 			mysqli_query($link, "DELETE FROM Objects WHERE ID=$id");
-			return true;
+			return makeStatus(true, "Deleted object");
 		}else{
-			return false;
+			return makeStatus(false, "Failed to delete object");
 		}
 	}
 	function requestEditObject($id, $ip){
@@ -39,7 +40,7 @@
 		$result = mysqli_query($link, "SELECT * FROM Objects WHERE ID=$ip and IP=NULL");
 		if(mysqli_fetch_array($result) !== false){
 			mysqli_query($link, "UPDATE Objects SET IP=$ip WHERE ID=$id");
-			return true;
+			return makeStatus(true,"Request permission granted");
 		}else{
 			return false;
 		}
