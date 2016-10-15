@@ -1,5 +1,5 @@
 yo
-<?
+<?php
  /* This form is interacted with via javascript
  a clip type command will be initiated to interact with the database
 	yaaaaaaaaaaay */
@@ -22,8 +22,7 @@ yo
 	}
 	/* Delete object completely*/
 	function deleteObject($id){
-		$result = mysqli_query($link, "SELECT * FROM Objects WHERE ID=$g_id");
-		if(mysqli_fetch_array($link, "SELECT * FROM Objects WHERE ID=$g_id AND IP=NULL");
+		$result = mysqli_query($link, "SELECT * FROM Objects WHERE ID=$g_id and IP=NULL");
 		if(mysqli_fetch_array($result) !== false){
 			mysqli_query($link, "DELETE FROM Objects WHERE ID=$g_id");
 			return true;
@@ -34,7 +33,7 @@ yo
 
 	if($action=="CREATE"){
 		$rval = createObject($g_id, $g_data);
-	else if($action=="DELETE"){
+	}else if($action=="DELETE"){
 		$rval = deleteObject($g_id);
 	}
 
