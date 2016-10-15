@@ -1,4 +1,4 @@
-//var Soundfont = require('soundfont-player')
+var ac = new AudioContext();
 
 //General audio file.
 function Sound(src){
@@ -14,12 +14,16 @@ function Sound(src){
 function Note(instrument, tone){
 	//Load an instrument from the online repo
 	//Do this by entering your own URL or just using the default https://gleitz.github.io/midi-js-soundfonts/
-	var instr = Soundfont.instrument(instrument); 
+	var instr = Soundfont.instrument(ac, instrument); 
 	//e.g. 'C4', 'G3', etc.
 	var t = tone;
 
 	//guess what this does......
 	function play(){
 		instr.play(t);
+	}
+
+	function stop(){
+		instr.stop();
 	}
 }
