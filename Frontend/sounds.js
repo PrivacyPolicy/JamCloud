@@ -11,19 +11,12 @@ function Sound(src){
 }
 
 //Discrete notes from a certain instrument
-function Note(instrument, tone){
+function Note(instrument, tone, callback){
 	//Load an instrument from the online repo
 	//Do this by entering your own URL or just using the default https://gleitz.github.io/midi-js-soundfonts/
-	var instr = Soundfont.instrument(ac, instrument); 
-	//e.g. 'C4', 'G3', etc.
-	var t = tone;
-
-	//guess what this does......
-	function play(){
-		instr.play(t);
-	}
-
-	function stop(){
-		instr.stop();
-	}
+	Soundfont.instrument(ac, instrument)
+        .then(function(instrument) {
+        
+        instrument.play(tone);
+    }); 
 }
