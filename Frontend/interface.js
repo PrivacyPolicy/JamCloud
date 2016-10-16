@@ -100,6 +100,7 @@ function buildTable() {
     $('#newInstr').click(createInstrument);
     $('#instrumentRemove').click(deleteInstrument);
     $('.clip').dblclick(editClip);
+    
 
 }
 
@@ -173,7 +174,8 @@ function createInstrument(){
 
 
 function deleteInstrument(event){
-
+	
+	console.log(event.target.parent().parent().id.substring(event.target.parent().parent().id.indexOf(_)+1));
 	serverDelete("Instruments", event.target.parent().parent().id.substring(event.target.parent().parent().id.indexOf(_)+1), null);
 	buildTable();
 
