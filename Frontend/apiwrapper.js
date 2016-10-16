@@ -35,7 +35,7 @@ function serverCreate(type, id, data, callback) {
            {"ACTION": "CREATE",
             "CLASS": type,
             "ID": id,
-            "DATA": data},
+            "DATA": JSON.stringify(data)},
            callback, "json");
 }
 
