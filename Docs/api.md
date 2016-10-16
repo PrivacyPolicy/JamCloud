@@ -9,7 +9,9 @@ objectcommand.php allows a frontend to interact with the JamCloud database
 **DATA** - Object JSON data  
 
 ### Return Data
-`{"status":status,"message":"<message>"}`
+`{"status":status,"message":"<message>"}`  
+
+`status` will be `true` or `false`
 
 ### Actions
 **UPDATE** - Update object (requires data)
