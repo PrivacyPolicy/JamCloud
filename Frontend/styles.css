@@ -100,7 +100,7 @@ body {
     text-overflow: ellipsis;
 }
 
-.button {
+#newInstr {
     border-radius: 50%;
     box-shadow: 4px 4px 15px rgba(0, 0, 0, .5);
     width: 30px;
@@ -114,11 +114,19 @@ body {
     transition: box-shadow .5s, transform .5s;
 }
 
-#clipAdd {
-    left:75;
-}
 #newClip {
+    border-radius: 50%;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, .5);
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 25px;
+    position: relative;
+
+    right:50;
     background:blue;
+    cursor: pointer;
 }
 
 .button:hover {
