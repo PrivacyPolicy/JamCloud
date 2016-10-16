@@ -67,7 +67,7 @@ function buildTable() {
     $("#content").click(checkForAdd);
     $('#playButton').click(playAll);
     $('#stopButton').click(stopAll);
-    $('.button').click(addInstrument);
+    $('#instrumentAdd').click(addInstrument);
 
 }
 
