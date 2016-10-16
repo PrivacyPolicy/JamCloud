@@ -27,7 +27,7 @@ function serverUpdate(type, id, data, callback) {
             "ID": id,
             "DATA": JSON.stringify(data)},
            callback, "json");
-console.log(data.contents[0]);
+
 }
 
 function serverCreate(type, id, data, callback) {
