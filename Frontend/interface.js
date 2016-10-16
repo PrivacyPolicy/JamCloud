@@ -64,9 +64,9 @@ function buildTable() {
     
     // add event listeners
     $(".clip").mousedown(startDragClip);
-//    $("#content").click(checkForAdd);
-	$('#playbutton').click(playAll());
-	playAll();
+    $("#content").click(checkForAdd);
+    $('#playbutton').click(playAll);
+
 }
 
 // Plays the whole piece. Initiates all sound and moves the timer bar.
