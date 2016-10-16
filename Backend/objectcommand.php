@@ -79,11 +79,12 @@
 		global $g_table;
 		global $ownership;
 		if($ownership){
-		$result = mysqli_query($link, "SELECT * form $g_table where ID=$id and IP=$ip");}else{
+		$result = mysqli_query($link, "SELECT * from $g_table where ID=$id and IP=$ip");}else{
 		 $result= mysqli_query($link, "SELECT * from $g_table where ID=$id");
 		}
 		if(!(mysqli_fetch_array($result)==false)){
-			mysqli_query($link, "UPDATE OBJECTS SET DATA=$data WHERE ID=$id"); return makeStatus("true", "Updated object $id");
+			$update_query= "UPDATE $g_table SET DATA='$data' WHERE ID=$id";
+			mysqli_query($link, $update_query); return makeStatus("true", "Updated object $id via query $update_query");
 		}else{
 			return makeStatus("false", "Failed to update object $id, maybe id does not exist");
 		}
