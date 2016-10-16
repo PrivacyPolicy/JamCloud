@@ -1,5 +1,5 @@
 const OBJECT_CLIP = "Clips";
-const DEFAULT_DURATION = 4;
+const DEFAULT_DURATION = 2;
 const POLL_FREQUENCY = 1; // every 1 second
 var timeScale = 100; // 100 px / second
                      // future: px/beats
@@ -18,7 +18,8 @@ $(function() {
           function(result, status) {
         if (status == "success") {
             // prevent errors with incomplete instrumentSettings
-            result = result.split("\"data\":}").join("\"data\":{}}");
+            result = result.split("\"data\":}").join("\"data\":{}}")
+                .split("\"data\": }").join("\"data\":{}}");
             data.instruments = JSON.parse(result);
             loadedFiles[0] = true;
             bothLoaded(loadedFiles);
@@ -32,7 +33,8 @@ $(function() {
           function(result, status) {
         if (status == "success") {
             // prevent errors with incomplete instrumentSettings
-            result = result.split("\"data\":}").join("\"data\":{}}");
+            result = result.split("\"data\":}").join("\"data\":{}}")
+                .split("\"data\": }").join("\"data\":{}}");
             data.clips = JSON.parse(result);
             loadedFiles[1] = true;
             bothLoaded(loadedFiles);
@@ -50,6 +52,8 @@ $(function() {
             pollUpdates();
         }
     }
+    // add 1-time event listeners
+    $("#content").click(checkForAdd);
 });
 
 function buildTable() {
@@ -60,6 +64,11 @@ function buildTable() {
     for (var i = 0; i < data.instruments.length; i++) {
         addInstrument(data.instruments[i]);
     }
+    data.clips.sort(function(a, b) {
+        if (a.data.startTime < b.data.startTime) return -1;
+        if (a.data.startTime > b.data.startTime) return 1;
+        return 0;
+    });
     for (var j = 0; j < data.clips.length; j++) {
         addClip(data.clips[j]);
     }
@@ -71,7 +80,6 @@ function buildTable() {
     
     // add event listeners
     $(".clip").mousedown(startDragClip);
-    $("#content").click(checkForAdd);
     $('#playButton').click(playAll);
     $('#stopButton').click(stopAll);
     $('#newInstr').click(createInstrument);
@@ -150,8 +158,8 @@ function createInstrument(){
 
 function deleteInstrument(event){
 	event.target.parent().id;
-	serverDelete("Instruments",  deleteInstrument(event){
-	event.target.parent().id;);
+	serverDelete("Instruments",  function() {
+	event.target.parent().id;});
 }
 
 function addClip(clip) {
@@ -272,13 +280,23 @@ function updateClipData(id, instrument, startTime,
 
 function addNewClipObject(instrument, startTime) {
     var id = getRandomInt(1, 10000000);
-    data.clips.push({id: id, data: {
+    var newClip = data.clips.push({id: id, data: {
         instrument: instrument,
         startTime: startTime,
         duration: DEFAULT_DURATION,
 	type: "note",
 	contents: []
     }});
+    serverCreate("Clips", id, function(result, status) {
+        if (status == "success") {
+            serverUpdate("Clip", id, newClip.data, function(result,
+                                                             status) {
+                if (status == "success") {
+                    console.log("Added a new clip succesfully!");
+                }
+            });
+        }
+    });
 }
     
 function getClipIndexForClipId(id) {
@@ -298,8 +316,16 @@ function getRandomInt(min, max) {
 }
 
 function checkForAdd(event) {
-    console.log(event.target);
-    // TODO add if the target is the background
+    var xVal = "clientX", yVal = "clientY";
+    if ($(event.target).is(".clipTimeline")) { // clicked the background
+        var $tempInstrument = $("#instrumentTemplate");
+        var instrumentHeight = $tempInstrument.height() +
+            parseInt($tempInstrument.css("margin-bottom"));
+        var instrumentInd = Math.floor(event[yVal] / instrumentHeight);
+        var time = (event[xVal] - 200) / timeScale;
+        addNewClipObject(instrumentInd + 1, time);
+        buildTable();
+    }
 }
 
 // a function to run a function every x seconds
