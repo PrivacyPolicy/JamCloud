@@ -168,7 +168,7 @@ var startDragClip = (function() {
                          {"Instrument": instrID,
                           "startTime": parseInt(newX / timeScale)},
                          function(response, status) {
-                alert(response + "\n\n" + status);
+                console.log(JSON.stringify(response) + "\n\n" + status);
             });
         };
         $(document).mousemove(mouseMove).mouseup(end);
