@@ -93,11 +93,10 @@
 		}
 		if(!(mysqli_fetch_array($result)==false)){
 			$update_query= "UPDATE $g_table SET DATA='$data' WHERE ID=$id";
-			mysqli_query($link, $update_query); return makeStatus("true", "Updated object $id via query $update_query");
+			mysqli_query($link, $update_query);
             
-            addToUpdateTable();
+            return makeStatus("true", "Updated object $id via query $update_query");
             
-            return makeStatus("true", "Updated object");
 		}else{
 			return makeStatus("false", "Failed to update object $id, maybe id does not exist");
 		}
@@ -127,12 +126,12 @@
         global $g_table;
         global $g_id;
         global $action;
-        global $data;
+        global $g_data;
         
-        $query = "INSERT INTO $g_table (TIMESTAMP, CLASS, OBJ_ID, ACTION, DATA)
-            VALUES($timestamp, '$g_table', $g_id, '$action', '$data');";
+        $query = "INSERT INTO Updates (TIMESTAMP, CLASS, OBJ_ID, ACTION, DATA)
+            VALUES($timestamp, '$g_table', $g_id, '$action', '$g_data');";
         $dp = mysqli_query($link, $query);
-		
-        return makeStatus("true", "Created object using query($query)");
+        
+        return makeStatus("true", "SUPER UBPDGE object using query($query)");
     }
 ?>
