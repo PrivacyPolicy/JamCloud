@@ -1,8 +1,12 @@
 var ac = new AudioContext();
 
+
+function makeWave(src){
+	return new Audio(src);
+}
+
 //Plays an audio file
-function playWave(src){
-	var audio = new Audio(src);
+function playWave(audio){
 	audio.play();
 }
 
@@ -21,10 +25,10 @@ function playNote(instrument, tone, length){
 function playNoteSeries(instrument, notes){
 	Soundfont.instrument(ac, instrument)
         	.then(function(instrument) {
-		
-		for (var i=0; i<notes.length; i++){
-			instrument.schedule(ac.currentTime, [{time:notes[i].startTime, note:notes[i].pitch, duration:notes[i].duration}]);
-		}
+		console.log(notes[0]);
+		instrument.schedule(ac.currentTime, notes);
+		//instrument.schedule(ac.currentTime, [{time:notes[i].startTime, note:notes[i].pitch, duration:notes[i].duration}]);
+	
 }
 );
 }
