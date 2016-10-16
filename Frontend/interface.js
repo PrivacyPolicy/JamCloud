@@ -143,8 +143,7 @@ function createInstrument(){
 
 function deleteInstrument(event){
 	event.target.parent().id;
-	serverDelete("Instruments",  deleteInstrument(event){
-	event.target.parent().id;);
+	serverDelete("Instruments",  event.target.parent().id;);
 }
 
 function addClip(clip) {
@@ -288,4 +287,34 @@ function getRandomInt(min, max) {
 
 function checkForAdd(event) {
     console.log(event.target);
+}
+
+// poll the database occasionally to see what updates have occured:
+// any updates should be handled
+function pollUpdates() {
+    everyXSeconds(POLL_FREQUENCY, function() {
+        $.getJSON("../Backend/requestupdates.php?TIMESTAMP=" +
+                  Math.floor(Date.now() / 1000),
+              null,
+              function(result, status) {
+            if (status == "success" && result.length) {
+                while(result.length > 0) {
+                    handleUpdate(result.pop());
+                }
+            }
+        });
+    });
+}
+
+// given an update data row, do the necessary changes locally
+function handleUpdate(update) {
+    if (update.class == "Clips") {
+        console.log("Handle update");
+        updateClipData(update.objectID,
+                       update.data.instrument,
+                       update.data.startTime,
+                       update.data.duration,
+                       update.data.type,
+                       update.data.contents);
+    }
 }
