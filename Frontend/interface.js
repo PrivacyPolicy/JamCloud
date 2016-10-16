@@ -47,10 +47,11 @@ function Clip(id, startTime, duration, instrument) {
 }
 // a type of clip: specifically, it contains notes
 function noteClip(startTime, duration, instrument, notes) {
-//                notes: [
-//                    {pitch: 74, startTime: 2.4, duration: 1.3},
+                notes: [
+                    {pitch: 'C4', startTime: 2.4, duration: 1.3},
+		    {pitch: 'D3', startTime: 2.6, duration: 1.3}
 //                    ...
-//                ]
+                ]
     Clip.call(this);
     //this = new Clip(startTime, duration, instrument);
     this.notes = notes;
