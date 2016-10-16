@@ -67,7 +67,7 @@ function buildTable() {
     $("#content").click(checkForAdd);
     $('#playButton').click(playAll);
     $('#stopButton').click(stopAll);
-    //$('#instrumentAdd').click(addInstrument);
+    $('#newIstr').click(createInstrument);
 
 }
 
@@ -128,7 +128,6 @@ function waveClip(startTime, duration, instrument, fileURL) {
 // 
 function addInstrument(instrument) {
 
-    instrument.name=window.prompt("What kind of instrument would you like?","acoustic_grand_piano");
     // Make a copy of the template
     var template = $("#instrumentTemplate").get(0).cloneNode(true);
     template.id = "instrument_" + instrument.id;
@@ -141,6 +140,15 @@ function addInstrument(instrument) {
     // add the newly-filled template to the list
     $temp.insertBefore("#instrumentAdd");
 }
+
+function createInstrument(){
+	var instrument;
+	instrument.name=window.prompt("What kind of instrument would you like?","acoustic_grand_piano");
+	instrument.id=42;
+	instrument.data.type=0;
+	addInstrument(instrument);
+}
+
 function addClip(clip) {
     // copy the template
     var template = $("#clipTemplate").get(0).cloneNode(true);
