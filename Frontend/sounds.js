@@ -1,12 +1,9 @@
 var ac = new AudioContext();
 
-//General audio file.
-function Sound(src){
-	
-	this.audio = new Audio(src);
-	function play(){
-		audio.play;
-	}
+//Plays an audio file
+function playWave(src){
+	var audio = new Audio(src);
+	audio.play();
 }
 
 //Discrete notes from a certain instrument
@@ -17,17 +14,17 @@ function playNote(instrument, tone, length){
         .then(function(instrument) {
         
         instrument.play(tone, ac.currentTime, {duration:length});
-
-	//instrument.schedule(ac.currentTime + 5, [{time:0, note: 60},{time: 3, note: 70}]);
     }); 
 }
 
-
+//pass this a legal instrument name and an array of notes (as defined in interface.js)
 function playNoteSeries(instrument, notes){
 	Soundfont.instrument(ac, instrument)
         	.then(function(instrument) {
 		
-		instrument.schedule(ac.currentTime, [{time:0, note: 60},{time: 3, note: 70}]);
+		for (var i=0; i<notes.length; i++){
+			instrument.schedule(ac.currentTime, [{time:notes[i].startTime, note:notes[i].pitch, duration:notes[i].duration}]);
+		}
 }
 );
 }
