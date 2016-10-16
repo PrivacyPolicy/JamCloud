@@ -36,7 +36,7 @@ Returns as JSON in the format:
 Creates MIDI in corgy/audio based on form data
 ### POST Options
 **NAME** output filename of MIDI file  
-**DATA** data in JSON format  
+**DATA** (optional)data in JSON format  
 
 Example JSON:  
 
