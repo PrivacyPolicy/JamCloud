@@ -1,11 +1,5 @@
-!*.html
-!*.php
-!*.js
-!*.css
-!*.py
-!*.cgi
-!*.txt
-!.gitignore
 *.ini
-!/Backend/*
-!/Frontend/*
+*.swp
+*.swap
+*.pycache
+*.exe
