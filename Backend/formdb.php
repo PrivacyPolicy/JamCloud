@@ -7,6 +7,7 @@ hey
 include_once("./session.php");
 $def_instruments_table = "CREATE TABLE Instruments (
 	ID int(11) AUTO_INCREMENT,
+	IP varchar(256),
 	DATA varchar(4096),
 	PRIMARY KEY(ID)
 	)";
