@@ -86,6 +86,9 @@ body {
     padding: 5px;
     line-height: calc(60px - 2 * 5px);
     pointer-events: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .button {
