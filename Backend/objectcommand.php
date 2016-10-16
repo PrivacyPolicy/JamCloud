@@ -3,7 +3,7 @@
  a clip type command will be initiated to interact with the database
 	yaaaaaaaaaaay */
 	include("./session.php");
-	$g_ip = $_SERVER['REMOTE_ADDR'];
+    $g_ip = $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'];
 	$action = $_POST['ACTION'];
 	$g_id = $_POST['ID'];
 	$g_data = mysqli_real_escape_string($link, $_POST['DATA']);
@@ -129,9 +129,10 @@
         global $g_id;
         global $action;
         global $g_data;
+        global $g_ip;
         
-        $query = "INSERT INTO Updates (TIMESTAMP, CLASS, OBJ_ID, ACTION, DATA)
-            VALUES($timestamp, '$g_table', $g_id, '$action', '$g_data');";
+        $query = "INSERT INTO Updates (TIMESTAMP, CLASS, IP, OBJ_ID, ACTION, DATA)
+            VALUES($timestamp, '$g_table', '$g_ip', $g_id, '$action', '$g_data');";
         $dp = mysqli_query($link, $query);
         
         return makeStatus("true", "SUPER UBPDGE object using query($query)");

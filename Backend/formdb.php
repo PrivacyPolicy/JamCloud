@@ -25,13 +25,17 @@ $def_files_table = "CREATE TABLE Files (
 $def_updates_table = "CREATE TABLE Updates (
     ID int(11) AUTO_INCREMENT,
     TIMESTAMP int(13),
+    IP varchar(256),
     CLASS varchar(256),
     OBJ_ID int(11),
     ACTION varchar(256),
     DATA varchar(4096),
     PRIMARY KEY(ID)
     )";
-    
+
+$results = [];
+$result = mysqli_query($link, "DROP TABLES Instruments, Clips, Files, Updates");
+$results[] = $result;  
 
 echo("ho\n<br>\n");
 $result = mysqli_query($link, "SHOW TABLES LIKE 'Instruments'");
@@ -67,6 +71,26 @@ if($result->num_rows == 1){
 	echo("Table 'Updates' does not exist\n<br>\n");
 	mysqli_query($link,$def_updates_table);
 }
+
+$result = mysqli_query($link, 'INSERT INTO Instruments (DATA) VALUES
+    ("{\\"type\\": \\"acoustic_grand_piano\\", \\"volume\\": 1, \\"balance\\": -1}"),
+    ("{\\"type\\": \\"acoustic_guitar_steel\\", \\"volume\\": 1, \\"balance\\": 0}"), 
+    ("{\\"type\\": \\"acoustic_grand_piano\\", \\"volume\\": 0.5, \\"balance\\": 0}")');
+$results[] = $result;
+$result = mysqli_query($link, "INSERT INTO Clips (DATA) VALUES
+    (\"{\\\"instrument\\\": 1, \\\"startTime\\\": 1.2, \\\"duration\\\": 2,
+    \\\"type\\\":\\\"note\\\", \\\"contents\\\":[]}\"), 
+    (\"{\\\"instrument\\\": 2, \\\"startTime\\\": 0.3, \\\"duration\\\": 1,
+    \\\"type\\\":\\\"note\\\", \\\"contents\\\":[]}\"), 
+    (\"{\\\"instrument\\\": 2, \\\"startTime\\\": 1.4, \\\"duration\\\": 2,
+    \\\"type\\\":\\\"note\\\", \\\"contents\\\":[]}\")");
+$results[] = $result;//print_r($link);
+$result = mysqli_query($link, "INSERT INTO Updates (TIMESTAMP, CLASS,
+    IP, OBJ_ID, ACTION, DATA) VALUES
+    (1, \"Clips\", 1, \"328.23.23.355\", \"UPDATE\",
+    \"{\\\"instrument\\\":1, \\\"startTime\\\":0.76, \\\"duration\\\":5}\")");
+$results[] = $result;
+//print_r($results);
 /**/?>
 </body>
 </html>
