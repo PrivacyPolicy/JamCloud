@@ -3,22 +3,28 @@
    since the GET-given timestamp
    */
 include("./session.php");
-$g_timestamp = $_GET["TIMESTAMP"] or 0;
+$g_timestamp = isset($_GET["TIMESTAMP"]) ? $_GET["TIMESTAMP"] : 0;
 $result = mysqli_query($link, "SELECT * FROM Updates WHERE TIMESTAMP
     >= $g_timestamp ORDER BY TIMESTAMP;");
 $rows;
-if (($rows = mysqli_fetch_array($result)) != false) {
+if ($result == false) die("Select did not work; sucks to be you");
+if ($result->num_rows > 0) {
+    //$rows = mysqli_fetch_array($result);
     echo "[\n";
-    for ($i = 0; $i < count($rows); $i++) {
-        echo "{\"timestamp\": {$row["TIMESTAMP"]}, ";
-        echo "\"class\": {$row["CLASS"]}, ";
-        echo "\"objectID\": {$row["OBJ_ID"]}, ";
-        echo "\"action\": {$row["ACTION"]}, ";
-        echo "\"data\": {$row["DATA"]}";
+    $rows = $result->fetch_assoc();
+    while ($rows) {
+        echo "{\"timestamp\": {$rows["TIMESTAMP"]}, ";
+        echo "\"class\": {$rows["CLASS"]}, ";
+        echo "\"objectID\": {$rows["OBJ_ID"]}, ";
+        echo "\"action\": {$rows["ACTION"]}, ";
+        echo "\"data\": {$rows["DATA"]}";
         echo "}";
-        if ($i < len($rows)) {
+        $rows = $result->fetch_assoc();
+        if ($rows) {
             echo ",\n";
         }
     }
     echo "\n]\n";
+} else {
+    die("something didn't work out right; sucks to be you");
 }
