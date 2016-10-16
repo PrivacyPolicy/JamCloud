@@ -312,7 +312,7 @@ function addNewClipObject(instrument, startTime, server) {
     var ftime=window.prompt("your favorite starting time");
     var fdura=window.prompt("your favorite....duration?");
      
-    var firstNote = [note:fpitch, time:ftime, dura:fdura]
+    var firstNote = [{note:fpitch, time:ftime, dura:fdura}]
 
     var newClip = data.clips.push({id: id, data: {
         instrument: instrument,
