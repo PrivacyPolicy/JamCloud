@@ -19,6 +19,7 @@ function addNoteToClip(id, pitch, time, duration){
 	}
 	if(e){
 		data.clips[i].contents = {"0":{"pitch":pitch,"time":time,"duration":duration}}
+		serverUpdate('Clips', clips[i], {"pitch":pitch,"time":time,"duration":null}, duration);
 	}else{
 		console.log("No such id");
 	}
