@@ -9,7 +9,20 @@ var data = {
     instruments: [],
     clips: []
 };
-
+function addNoteToClip(id, pitch, time, duration){
+	var e = false;var i;
+	for(i=0;i<data.clips.length;i++){
+		if(data.clips[i].id=id){
+			e=true;
+			break;
+		}
+	}
+	if(e){
+		data.clips[i].contents = {"0":{"pitch":pitch,"time":time,"duration":duration}}
+	}else{
+		console.log("No such id");
+	}
+}
 $(function() {
     console.log("Loading...");
     var loadedFiles = [false, false];
