@@ -230,7 +230,9 @@ var startDragClip = (function() {
             var clipInd = updateClipData(clipID,
                                          instrID,
                                          newX / timeScale,
-                                         clipData.data.duration);
+                                         clipData.data.duration,
+                                         "note",
+                                         []);
             serverUpdate(OBJECT_CLIP,
                          clipID,
                          data.clips[clipInd].data,
@@ -238,7 +240,6 @@ var startDragClip = (function() {
                 if (status != "success") {
                     console.error("Some kind of weird error occurred");
                 }
-                //console.log(JSON.stringify(response) + ", " + status);
             });
         };
         $(document).mousemove(mouseMove).mouseup(end);
@@ -255,12 +256,15 @@ var startDragClip = (function() {
     }
 })();
 
-function updateClipData(id, instrument, startTime, duration) {
+function updateClipData(id, instrument, startTime,
+                         duration, type, contents) {
     var ind = getClipIndexForClipId(id);
     var clip = data.clips[ind];
     clip.data.instrument = instrument;
     clip.data.startTime = startTime;
     clip.data.duration = duration;
+    clip.data.type = type;
+    clip.data.contents = contents;
     buildTable();
     return ind;
 }
@@ -312,9 +316,9 @@ function pollUpdates() {
               null,
               function(result, status) {
             if (status == "success") {
-                console.log(result);
-                console.log("New data, comin' in!");
-                console.table(result);
+                if (result.length > 0) {
+                    //kgfkiuyflgkuyfghvikuyfy
+                }
             }
         });
     });
