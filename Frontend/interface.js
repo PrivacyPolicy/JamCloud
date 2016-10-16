@@ -73,6 +73,9 @@ function buildTable() {
     if (i === 0) { // No instruments: new file
         // TODO show new file options
     }
+    
+    // add event listeners
+    $(".clip").mousedown(startDragClip);
 }
 
 // 
@@ -91,7 +94,7 @@ function addInstrument(instrument) {
     }
 
     // add the newly-filled template to the list
-    $("#instrumentTemplate").before($temp);
+    $temp.insertBefore("#instrumentAdd");
 }
 function addClip($instrument, clip) {
     // copy the template
@@ -110,4 +113,30 @@ function addClip($instrument, clip) {
 
     // add the newly-filled template to the list
     $instrument.find(".clipTimeline").append($clipElem);
+}
+
+// This is a closure. I'm not explaining JS closures today.
+var startDragClip = (function() {
+    const xVal = "clientX";
+    var oldStartLeft = 0, oldMouseX = 0;
+    return function(event) {
+        var $clip = $(event.target);
+        oldStartLeft = parseFloat($clip.css("left"));
+        oldMouseX = parseFloat(event[xVal]);
+        $clip.mousemove(mouseMove);
+        $clip.mouseup(end).mouseout(end);
+        var mouseMove = function(event) {
+            console.log(oldStartLeft);
+            var deltaX = event[xVal] - oldMouseX;
+            $clip.css("left", (oldStartLeft + deltaX) + "px");
+        };var end;
+//        var end = function(event) {
+//            $clip.off("mouseup", end).off("mouseout", end)
+//                .off("mousemove", mouseMove);
+//        };
+    }
+})();
+
+function endDragClip(clip) {
+    
 }

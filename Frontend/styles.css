@@ -35,10 +35,7 @@ body {
     background: linear-gradient(to bottom, grey, #111);
     box-shadow: 2px 0 5px rgba(0, 0, 0, .7);
 }
-.instrumentSettings > .text {
-    padding: 5px;
-    line-height: calc(60px - 2 * 5px);
-}
+/* .instrumentSettings > .text {} *** defined below *** */
 
 /*.instrumentSettings:after {
     content: "";
@@ -68,7 +65,26 @@ body {
         #0058ff, #2900cc);
     box-shadow: 0 0 15px rgba(0, 0, 0, .3);
 }
-.clip > .text {
+.clip > .text, .instrumentSettings > .text {
     padding: 5px;
     line-height: calc(60px - 2 * 5px);
+    pointer-events: none;
+}
+
+.button {
+    border-radius: 50%;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, .5);
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 25px;
+    background: red;
+    cursor: pointer;
+    
+    transition: box-shadow .5s, transform .5s;
+}
+.button:hover {
+    transform: scale(1.05);
+    box-shadow: 6px 6px 20px rgba(0, 0, 0, .4);
 }
