@@ -5,35 +5,8 @@ var timeScale = 100; // 100 px / second
 var instrumentTypes = ["acoustic_grand_piano", "acoustic_guitar_steel",
                        "Drum", "acoustic_guitar_steel"];
 var data = {
-    instruments: [
-        {
-            id: 1,
-            type: 0, // instruments[0] == "Piano"
-            clips: [
-                new noteClip({note:"C3", time:0, duration:1}, 0),
-                new noteClip({note:"C4", time:1, duration:1}, 0),
-                new noteClip({note:"C5", time:2, duration:1}, 0)
-                ]
-        },
-        {
-            id: 2,
-            type: 2, // instruments[2] == "Drum"
-            clips: [
-                new noteClip({note:"D3", time:3, duration:1}, 2),
-                new noteClip({note:"D4", time:4, duration:1}, 2),
-                new noteClip({note:"D5", time:5, duration:1}, 2)
-                ]
-        },
-        {
-            id: 3,
-            type: 4, // instruments[3] == "Electric Guitar"
-            clips: [
-                new noteClip({note:"E3", time:6, duration:1}, 3),
-                new noteClip({note:"E4", time:7, duration:1}, 3),
-                new noteClip({note:"E5", time:8, duration:1}, 3)
-                ]
-        }
-        ]
+    instruments: [],
+    clips: []
 };
 
 $(function() {
@@ -92,6 +65,7 @@ function buildTable() {
     // add event listeners
     $(".clip").mousedown(startDragClip);
 //    $("#content").click(checkForAdd);
+}
 
 // Plays the whole piece. Initiates all sound and moves the timer bar.
 function playAll(){
