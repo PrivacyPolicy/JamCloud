@@ -310,7 +310,12 @@ function addNewClipObject(instrument, startTime) {
 }
    
 function editClip(event){
-		console.log(event.target.id.substring(event.target.id.indexOf('_')));
+
+		var newnote = window.prompt("pick a new note and we'll slap it on the end");
+		var newtime = window.prompt("when should it start?");
+		var newdura = window.prompt("how long should it be?");
+		
+		addNoteToClip(event.target.id.substring(event.target.id.indexOf('_')+1), newnote, newtime, newdura);
 }
  
 function getClipIndexForClipId(id) {
