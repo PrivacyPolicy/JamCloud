@@ -22,7 +22,7 @@ Returns as JSON in the format:
   
     {
         {"id":5,
-        "data":{<OBJECT DATA>}},
+        "data":<OBJECT DATA in JSON FORMAT>}},
 	{"id":256,
-	"data":{<OBJECT DATA>}}
+	"data":<OBJECT DATA in JSON Format>}
     }
