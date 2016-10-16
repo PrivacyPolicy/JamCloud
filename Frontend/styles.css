@@ -55,7 +55,7 @@ body {
     position: absolute;
     height: 100%;
     width: 2px;
-    left: 250px;
+    left: 200px;
     z-index: 99999;
     top: 0;
     background: black;

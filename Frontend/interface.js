@@ -9,27 +9,27 @@ var data = {
             id: 1,
             type: 0, // instruments[0] == "Piano"
             clips: [
-                new noteClip(1, 0, 2, 0),
-                new noteClip(2, 3, 4, 0),
-                new noteClip(3, 8, 1, 0)
+                new noteClip("C3", 0, 1, 0),
+                new noteClip("C4", 1, 1, 0),
+                new noteClip("C5", 2, 1, 0)
                 ]
         },
         {
             id: 2,
             type: 2, // instruments[2] == "Drum"
             clips: [
-                new noteClip(4, 2, 20, 2),
-                new noteClip(5, 4, 4, 2),
-                new noteClip(6, 3, 1, 2)
+                new noteClip("D3", 3, 1, 2),
+                new noteClip("D4", 4, 1, 2),
+                new noteClip("D5", 5, 1, 2)
                 ]
         },
         {
             id: 3,
             type: 4, // instruments[3] == "Electric Guitar"
             clips: [
-                new noteClip(7, 1, 2, 3),
-                new noteClip(8, 3, 4, 3),
-                new noteClip(9, 2, 1, 3)
+                new noteClip("E3", 6, 1, 3),
+                new noteClip("E4", 7, 1, 3),
+                new noteClip("E5", 8, 1, 3)
                 ]
         }
         ]
@@ -42,15 +42,24 @@ $(function() {
 
 // Plays the whole piece. Initiates all sound and moves the timer bar.
 function playAll(){
+	//Concatenate like instrument sounds together
+	var allnotes=[];
 	for (var i=0; i<data.instruments.length; i++){
+	
 		for (var j=0; j<data.instruments[i].clips.length; j++){
-			playNoteSeries("acoustic_grand_piano" , data.instruments[i].clips[j].notes);
+			allnotes = allnotes.concat(data.instruments[i].clips[j].notes);
 		}
 	}
+	//Play each instrument separately them all as a single instrument call	
+	playNoteSeries("acoustic_grand_piano" , allnotes);
+	stepTimerBar();
 }
 
 // 
 function stepTimerBar(){
+	//var increment = ($('#bpm').val) * ($('.clipTimeline').css('width')/60);
+	//$('#timerBar').css('left',$('#timerBar').css('left')+increment);
+	$('#timerBar').velocity({left: "500px" },{duration:30000});
 
 }
 
@@ -62,16 +71,17 @@ function Clip(id, startTime, duration, instrument) {
     this.instrument = instrument;
 }
 // a type of clip: specifically, it contains notes
-function noteClip(startTime, duration, instrument, notes) {
+function noteClip(notes, startTime, noteDuration, instrument) {
                 notes = [
-                    {pitch: 'C4', startTime: 2.4, duration: 1.3}]
-	//	    {pitch: 'E4', startTime: 2.6, duration: 1.3},
-  //                  {pitch: 'G4', startTime: 2.8, duration: 1.3}
-//                ]
-    Clip.call(this);
-    //this = new Clip(startTime, duration, instrument);
-    this.notes = notes;
-	//playNoteSeries("acoustic_grand_piano", this.notes);
+                    {note: notes, time: startTime, duration: noteDuration}]
+
+	
+	    Clip.call(this);  
+	    this.notes = notes;
+		
+		this.addNote = function(newnote, newtime, newduration){
+			this.notes = this.notes.concat({note:newnote, time:newtime, duration:newduration });
+		}
 }
 
 function waveClip(startTime, duration, instrument, fileURL) {
