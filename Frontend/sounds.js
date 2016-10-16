@@ -1,8 +1,12 @@
 var ac = new AudioContext();
 
+
+function makeWave(src){
+	return new Audio(src);
+}
+
 //Plays an audio file
-function playWave(src){
-	var audio = new Audio(src);
+function playWave(audio){
 	audio.play();
 }
 

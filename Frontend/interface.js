@@ -17,7 +17,7 @@ var data = {
             id: 2,
             type: 2, // instruments[2] == "Drum"
             clips: [
-                new Clip(4, 2, 2, 2),
+                new Clip(4, 2, 20, 2),
                 new Clip(5, 4, 4, 2),
                 new Clip(6, 3, 1, 2)
                 ]
