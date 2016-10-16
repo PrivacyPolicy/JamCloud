@@ -113,6 +113,11 @@ body {
     
     transition: box-shadow .5s, transform .5s;
 }
+
+#clipAdd {
+    left:75;
+}
+
 .button:hover {
     transform: scale(1.05);
     box-shadow: 6px 6px 20px rgba(0, 0, 0, .4);
