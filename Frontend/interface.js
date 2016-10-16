@@ -69,6 +69,7 @@ function buildTable() {
     $('#stopButton').click(stopAll);
     $('#newInstr').click(createInstrument);
     $('#instrumentRemove').click(deleteInstrument);
+    $('.clip').click(editClip);
 
 }
 
@@ -268,7 +269,14 @@ function addNewClipObject(instrument, startTime) {
 	contents: []
     }});
 }
-    
+   
+function editClip(event){
+	console.log('hello');
+	if(event.button == 2){
+		console.log(event.target);
+	}
+}
+ 
 function getClipIndexForClipId(id) {
     for (var i = 0; i < data.clips.length; i++) {
         if (data.clips[i].id == id) {
