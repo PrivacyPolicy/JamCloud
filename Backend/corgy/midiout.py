@@ -35,15 +35,19 @@ def createMIDI(filename, j = '{"0":{"startTime": 0, "duration": 5,"notes":{"0":{
 	x = json.loads(j)
 	keys = list(x)
 	clips=[]
+	print("for")
 	for key in keys:
-		notes = []
-		clip = x[key]
-		nkeys = list(clip["contents"]);
-		for nkey in nkeys:
-			note = clip["contents"][nkey]
-			notes.append(Note(note["pitch"],note["time"],note["duration"]));
-		clips.append(NoteClip(clip["startTime"],clip["duration"],notes))
-		
+		try:
+			notes = []
+			clip = x[key]
+			nkeys = list(clip["contents"]);
+			for nkey in nkeys:
+				note = clip["contents"][nkey]
+				notes.append(Note(note["pitch"],note["time"],note["duration"]));
+			clips.append(NoteClip(clip["startTime"],clip["duration"],notes))
+		except Exception as e:
+			print("Ohs")
+	print("about ot create");	
 	_createRawMIDI(filename,clips)
 
 

@@ -13,13 +13,14 @@ except Exception:
 		response = (requests.post("http://107.170.44.215/JamCloud/Backend/corgyjson.php").text);
 		data = response
 		print(data)
+		print("N-true");
 	except Exception as e:
 		print("N-Error");
 		print(e)
-#print(name);
-#print(data);
 try:
+	print("About");
 	midiout.createMIDI(name,data);
 	print("success")
 except Exception as e:
+	print("End")
 	print(e)

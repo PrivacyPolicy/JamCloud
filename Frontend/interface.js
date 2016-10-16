@@ -18,8 +18,9 @@ function addNoteToClip(id, pitch, time, duration){
 		}
 	}
 	if(e){
-		//data.clips[i].contents = {"0":{"pitch":pitch,"time":time,"duration":duration}}
-		serverUpdate('Clips', data.clips[i], {"pitch":pitch,"time":time,"duration":duration}, null);
+		alert(data.clips[i].data.instrument);
+		data.clips[i].contents = {"0":{"pitch":pitch,"time":time,"duration":duration}}
+		serverUpdate('Clips', data.clips[i].id, data.clips[i], null);
 	}else{
 		console.log("No such id");
 	}
