@@ -5,7 +5,7 @@ objectcommand.php allows a frontend to interact with the JamCloud database
 
 **CLASS** - can be "Instruments" or "Clips"  
 **ID** - The object ID  
-**ACTION** - The interaction command
+**ACTION** - The interaction command  
 **DATA** - Object JSON data  
 
 ##Actions
@@ -15,5 +15,5 @@ objectcommand.php allows a frontend to interact with the JamCloud database
 
 # getdata.php
 getdata.php returns objects as JSON
-##POST/GET Request PArameters
+##POST/GET Request Prameters
 **CLASS** - can be "Instruments or "Clips"
