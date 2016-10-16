@@ -142,8 +142,9 @@ function createInstrument(){
 
 
 function deleteInstrument(event){
-	//event.
-	serverDelete("Instruments", instrument.id);
+	event.target.parent().id;
+	serverDelete("Instruments",  deleteInstrument(event){
+	event.target.parent().id;);
 }
 
 function addClip(clip) {
@@ -263,7 +264,9 @@ function addNewClipObject(instrument, startTime) {
     data.clips.push({id: id, data: {
         instrument: instrument,
         startTime: startTime,
-        duration: DEFAULT_DURATION
+        duration: DEFAULT_DURATION,
+	type: "note",
+	contents: []
     }});
 }
     
