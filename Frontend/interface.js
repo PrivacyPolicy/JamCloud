@@ -266,4 +266,3 @@ function getRandomInt(min, max) {
 function checkForAdd(event) {
     console.log(event.target);
 }
-}
