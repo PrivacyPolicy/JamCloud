@@ -48,5 +48,5 @@ function serverExportMIDI(name, data, callback) {
 	$.post(PHP_OBJECT_COMMAND,
 	{"NAME": name,
 	"DATA": JSON.stringify(data)},
-	callback, "json);
+	callback, "json");
 }
