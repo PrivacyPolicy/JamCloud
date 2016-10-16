@@ -46,7 +46,7 @@ def createMIDI(filename, j = '{"0":{"startTime": 0, "duration": 5,"notes":{"0":{
 				notes.append(Note(note["pitch"],note["time"],note["duration"]));
 			clips.append(NoteClip(clip["startTime"],clip["duration"],notes))
 		except Exception as e:
-			print("Ohs")
+			print("Unhelpful error message" % e)
 	print("about ot create");	
 	_createRawMIDI(filename,clips)
 
