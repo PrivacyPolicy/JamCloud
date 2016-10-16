@@ -297,7 +297,7 @@ function addNewClipObject(instrument, startTime) {
 }
    
 function editClip(event){
-	console.log('hello');
+	console.log(event.button);
 	if(event.button == 2){
 		console.log(event.target);
 	}

@@ -24,6 +24,7 @@ body {
 	background:red;
 	z-index: 99999;
 	font-size: 15px;
+	vertical-align:middle;
 }
 
 .instrument {
