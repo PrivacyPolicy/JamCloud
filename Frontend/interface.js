@@ -18,7 +18,8 @@ function addNoteToClip(id, pitch, time, duration){
 		}
 	}
 	if(e){
-		data.clips[i].contents = {"0":{"pitch":pitch,"time":time,"duration":duration}}
+		//data.clips[i].contents = {"0":{"pitch":pitch,"time":time,"duration":duration}}
+		serverUpdate('Clips', data.clips[i], {"pitch":pitch,"time":time,"duration":duration}, null);
 	}else{
 		console.log("No such id");
 	}
@@ -98,6 +99,7 @@ function buildTable() {
     $('#newInstr').click(createInstrument);
     $('#instrumentRemove').click(deleteInstrument);
     $('.clip').dblclick(editClip);
+    
 
 }
 
@@ -171,10 +173,11 @@ function createInstrument(){
 
 
 function deleteInstrument(event){
-	event.target.parent().id;
-	serverDelete("Instruments",  function() {
-	event.target.parent().id;});
-	serverDelete("Instruments",  event.target.parent().id);
+	
+	console.log(event.target.parent.parent.id.substring(event.target.parent().parent().id.indexOf(_)+1));
+	serverDelete("Instruments", event.target.parent().parent().id.substring(event.target.parent().parent().id.indexOf(_)+1), null);
+	buildTable();
+
 }
 
 function addClip(clip) {
