@@ -68,7 +68,7 @@ body {
     transition: transform .5s, box-shadow .5s, top .3s;
 }
 .clip.dragging {
-    transform: scale(1.05);
+    transform: scale(1.01);
     box-shadow: 4px 4px 20px rgba(0, 0, 0, .2);
     z-index: 99998 !important;
 }

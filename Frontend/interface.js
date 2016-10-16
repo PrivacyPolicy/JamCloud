@@ -1,4 +1,5 @@
 const OBJECT_CLIP = "Clips";
+const DEFAULT_DURATION = 4;
 var timeScale = 100; // 100 px / second
                      // future: px/beats
 var instrumentTypes = ["acoustic_grand_piano", "acoustic_guitar_steel",
@@ -27,8 +28,6 @@ $(function() {
           null,
           function(result, status) {
         if (status == "success") {
-            console.log("SOMETHING: " + result);
-            console.log(JSON.stringify(JSON.parse(result)));
             data.clips = JSON.parse(result);
             loadedFiles[1] = true;
             bothLoaded(loadedFiles);
@@ -45,6 +44,28 @@ $(function() {
         }
     }
 });
+
+function buildTable() {
+    // Empty the table of any instruments
+    $("#content > :not(.persistant)").remove();
+
+    // go through and add the instruments
+    for (var i = 0; i < data.instruments.length; i++) {
+        addInstrument(data.instruments[i]);
+    }
+    for (var j = 0; j < data.clips.length; j++) {
+        addClip(data.clips[j]);
+    }
+    if (i === 0) { // No instruments: new file
+        // TODO show new file options
+    } else if (j === 0) { // there are instruments, just no clips yet
+        // TODO show add clips options
+    }
+    
+    // add event listeners
+    $(".clip").mousedown(startDragClip);
+//    $("#content").click(checkForAdd);
+}
 
 // clip constructor: a segment of sound (MIDI music, file audio)
 function Clip(id, startTime, duration, instrument) {
@@ -69,27 +90,6 @@ function waveClip(startTime, duration, instrument, fileURL) {
     Clip.call(this);
     this.fileURL = fileURL;
     // TODO cache the file
-}
-
-function buildTable() {
-    // Empty the table of any instruments
-    $("#content tr:not(.persistant)").remove();
-
-    // go through and add the instruments
-    for (var i = 0; i < data.instruments.length; i++) {
-        addInstrument(data.instruments[i]);
-    }
-    for (var j = 0; j < data.clips.length; j++) {
-        addClip(data.clips[j]);
-    }
-    if (i === 0) { // No instruments: new file
-        // TODO show new file options
-    } else if (j === 0) { // there are instruments, just no clips yet
-        // TODO show add clips options
-    }
-    
-    // add event listeners
-    $(".clip").mousedown(startDragClip);
 }
 
 // 
@@ -179,34 +179,69 @@ var startDragClip = (function() {
             var instrID = parseInt($newInstrument.attr("id")
                                    .split("_")[1]);
             var clipID = parseInt($clip.attr("id").split("_")[1]);
-            var clipData = getClipIndexForClipId(clipID);
+            var clipData = getClipDataForClipId(clipID);
+            var clipInd = updateClipData(clipID,
+                                         instrID,
+                                         newX / timeScale,
+                                         clipData.data.duration);
             serverUpdate(OBJECT_CLIP,
                          clipID,
-                         {"instrument": instrID,
-                          "startTime": newX / timeScale,
-                          "duration": clipData.data.duration},
+                         data.clips[clipInd].data,
                          function(response, status) {
-                console.log(JSON.stringify(response) + "\n\n" + status);
+                if (status != "success") {
+                    console.error("Some kind of weird error occurred");
+                }
             });
         };
         $(document).mousemove(mouseMove).mouseup(end);
     }
-})();
-// find which instrument the y-position is referring to
-function whichInstrumentForY($instruments, y, instrumentHeight) {
-    var size = $instruments.size();
-    for (var i = 0; i < size; i++) {
-        if ((i + 1) * instrumentHeight > y) {
-            return $instruments.eq(i);
+    // find which instrument the y-position is referring to
+    function whichInstrumentForY($instruments, y, instrumentHeight) {
+        var size = $instruments.size();
+        for (var i = 0; i < size; i++) {
+            if ((i + 1) * instrumentHeight > y) {
+                return $instruments.eq(i);
+            }
         }
+        return null;
     }
-    return null;
+})();
+
+function updateClipData(id, instrument, startTime, duration) {
+    var ind = getClipIndexForClipId(id);
+    var clip = data.clips[ind];
+    clip.data.instrument = instrument;
+    clip.data.startTime = startTime;
+    clip.data.duration = duration;
+    buildTable();
+    return ind;
+}
+
+function addNewClipObject(instrument, startTime) {
+    var id = getRandomInt(1, 10000000);
+    data.clips.push({id: id, data: {
+        instrument: instrument,
+        startTime: startTime,
+        duration: DEFAULT_DURATION
+    }});
 }
     
 function getClipIndexForClipId(id) {
     for (var i = 0; i < data.clips.length; i++) {
         if (data.clips[i].id == id) {
-            return data.clips[i];
+            return i;
         }
     }
+}
+function getClipDataForClipId(id) {
+    return data.clips[getClipIndexForClipId(id)];
+}
+    
+// Returns a random integer between min (included) and max (included)
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function checkForAdd(event) {
+    console.log(event.target);
 }
