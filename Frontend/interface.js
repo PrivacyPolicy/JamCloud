@@ -75,9 +75,9 @@ function playAll(){
 	//Concatenate like instrument sounds together
 
 	var allnotes=[{note:'E5', time:0, duration:3}];
-    for (var j=0; j < data.clips.length; j++){
-        allnotes = allnotes.concat(data.clips[j].notes);
-    }
+    	for (var j=0; j < data.clips.length; j++){
+        	allnotes = allnotes.concat(data.clips[j].notes);
+    	}
 	// Play each instrument separately all as a single instrument call
 	playNoteSeries("acoustic_grand_piano" , allnotes);
 	stepTimerBar();
@@ -86,7 +86,8 @@ function playAll(){
 // 
 function stepTimerBar(){
 	//var increment = ($('#bpm').val) * ($('.clipTimeline').css('width')/60);
-	$('#timerBar').velocity({left: "500px" },{duration:30000});
+	$('#timerBar').velocity({left: $('.clipTimeline').css('width') },{duration:($('#bpm').val)*100/60 });
+	console.log($('.clipTimeline').css('width'));
 }
 
 
