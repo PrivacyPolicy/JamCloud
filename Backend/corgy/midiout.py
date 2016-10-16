@@ -44,7 +44,7 @@ def createMIDI(filename, j = '{"0":{"startTime": 0, "duration": 5,"notes":{"0":{
 			notes.append(Note(note["pitch"],note["time"],note["duration"]));
 		clips.append(NoteClip(clip["startTime"],clip["duration"],notes))
 		
-	_createRawMIDI("out.midi",clips)
+	_createRawMIDI(filename,clips)
 
 
 """

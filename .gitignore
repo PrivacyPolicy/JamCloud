@@ -3,3 +3,5 @@
 *.swap
 *.pycache
 *.exe
+*.pyc
+*.midi

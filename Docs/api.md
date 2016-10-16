@@ -31,3 +31,13 @@ Returns as JSON in the format:
 	{"id":256,
 	"data":<OBJECT DATA IN JSON FORMAT>}
     }
+
+# corgy/newmidi.py
+Creates MIDI in corgy/audio based on form data
+### POST Options
+**NAME** output filename of MIDI file  
+**DATA** data in JSON format  
+
+Example JSON:  
+
+`{"0":{"startTime": 0, "duration": 5,"notes":{"0":{"pitch":65, "time":1,"duration":6}}}}`
