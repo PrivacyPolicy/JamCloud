@@ -1,6 +1,6 @@
 const OBJECT_CLIP = "Clips";
 const DEFAULT_DURATION = 2;
-const POLL_FREQUENCY = .01; // every 1 second
+const POLL_FREQUENCY = 5; // every 1 second
 var timeScale = 100; // 100 px / second
                      // future: px/beats
 var instrumentTypes = ["acoustic_grand_piano", "acoustic_guitar_steel",
@@ -290,10 +290,12 @@ var startDragClip = (function() {
 function updateClipData(id, instrument, startTime, duration) {
     var ind = getClipIndexForClipId(id);
     var clip = data.clips[ind];
-    clip.data.instrument = instrument;
-    clip.data.startTime = startTime;
-    clip.data.duration = duration;
-    buildTable();
+    if (clip != undefined && clip.data != undefined) {
+        clip.data.instrument = instrument;
+        clip.data.startTime = startTime;
+        clip.data.duration = duration;
+        buildTable();
+    }
     return ind;
 }
 
@@ -306,18 +308,23 @@ function addNewClipObject(instrument, startTime, server) {
 	type: "note",
 	contents: []
     }});
-    if (server || server == undefined) {
-        serverCreate("Clips", id, function(result, status) {
-            if (status == "success") {
-                serverUpdate("Clip", id, newClip.data, function(result,
-                                                                 status) {
-                    if (status == "success") {
-                        console.log("Added a new clip succesfully!");
-                    }
-                });
-            }
+    if (server && server != undefined) {
+        serverCreate("Clips", id, newClip.data, function() {
+            console.log("OGIEHEOIEHG:EGP");
         });
     }
+//    if (server || server == undefined) {
+//        serverCreate("Clips", id, function(result, status) {
+//            if (status == "success") {
+//                serverUpdate("Clip", id, newClip.data, function(result,
+//                                                                 status) {
+//                    if (status == "success") {
+//                        console.log("Added a new clip succesfully!");
+//                    }
+//                });
+//            }
+//        });
+//    }
 }
    
 function editClip(event){
@@ -369,13 +376,26 @@ function everyXSeconds(x, func) {
 var lastTime = Math.floor(Date.now() / 1000);
 function pollUpdates() {
     everyXSeconds(POLL_FREQUENCY, function() {
-        $.getJSON("../Backend/requestupdates.php?TIMESTAMP=" +
-                  lastTime,
+        $.get("../Backend/requestupdates.php?TIMESTAMP=" +
+                  (lastTime - lastTime),
               null,
               function(result, status) {
+            result = result.split("\"data\": }").join("\"data\": {}}")
+                .split("\"data\": \n}").join("\"data\": {}}")
+                .split("\"data\":\n }").join("\"data\": {}}")
+                .split("\"data\":  }").join("\"data\": {}}")
+                .split("\"data\":\n}").join("\"data\": {}}")
+                .split("\"data\": \r}").join("\"data\": {}}")
+                .split("\"data\":\r }").join("\"data\": {}}")
+                .split("\"data\":  }").join("\"data\": {}}")
+                .split("\"data\":\r}").join("\"data\": {}}");
+            result = JSON.parse(result);
+            //console.log(result);
             if (status == "success" && result.length) {
                 while(result.length > 0) {
-                    handleUpdate(result.pop());
+                    //if (result != undefined) {
+                        handleUpdate(result.pop());
+                    //}
                 }
             }
         });
@@ -385,7 +405,7 @@ function pollUpdates() {
 
 // given an update data row, do the necessary changes locally
 function handleUpdate(update) {
-    console.log(JSON.stringify(update));
+    //console.log(JSON.stringify(update));
     if (update.action == "UPDATE") {
         if (update.class == "Clips") {
             console.log("Handle UPDATE");

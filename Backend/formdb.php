@@ -72,23 +72,23 @@ if($result->num_rows == 1){
 	mysqli_query($link,$def_updates_table);
 }
 
-$result = mysqli_query($link, "INSERT INTO Instruments (DATA) VALUES
-    ('{\"type\": \"acoustic_grand_piano\", \"volume\": 1, \"balance\": -1}'),
-    ('{\"type\": \"acoustic_guitar_steel\", \"volume\": 1, \"balance\": 0}'), 
-    ('{\"type\": \"acoustic_grand_piano\", \"volume\": 0.5, \"balance\": 0}')");
+$result = mysqli_query($link, 'INSERT INTO Instruments (DATA) VALUES
+    ("{\\"type\\": \\"acoustic_grand_piano\\", \\"volume\\": 1, \\"balance\\": -1}"),
+    ("{\\"type\\": \\"acoustic_guitar_steel\\", \\"volume\\": 1, \\"balance\\": 0}"), 
+    ("{\\"type\\": \\"acoustic_grand_piano\\", \\"volume\\": 0.5, \\"balance\\": 0}")');
 $results[] = $result;
 $result = mysqli_query($link, "INSERT INTO Clips (DATA) VALUES
-    ('{\"instrument\": 1, \"startTime\": 1.2, \"duration\": 2,
-    \"type\":\"note\", \"contents\":[]}'), 
-    ('{\"instrument\": 2, \"startTime\": 0.3, \"duration\": 1,
-    \"type\":\"note\", \"contents\":[]}'), 
-    ('{\"instrument\": 2, \"startTime\": 1.4, \"duration\": 2,
-    \"type\":\"note\", \"contents\":[]}')");
-$results[] = $result;
+    (\"{\\\"instrument\\\": 1, \\\"startTime\\\": 1.2, \\\"duration\\\": 2,
+    \\\"type\\\":\\\"note\\\", \\\"contents\\\":[]}\"), 
+    (\"{\\\"instrument\\\": 2, \\\"startTime\\\": 0.3, \\\"duration\\\": 1,
+    \\\"type\\\":\\\"note\\\", \\\"contents\\\":[]}\"), 
+    (\"{\\\"instrument\\\": 2, \\\"startTime\\\": 1.4, \\\"duration\\\": 2,
+    \\\"type\\\":\\\"note\\\", \\\"contents\\\":[]}\")");
+$results[] = $result;//print_r($link);
 $result = mysqli_query($link, "INSERT INTO Updates (TIMESTAMP, CLASS,
     IP, OBJ_ID, ACTION, DATA) VALUES
     (1, \"Clips\", 1, \"328.23.23.355\", \"UPDATE\",
-    \"{'instrument':1, 'startTime':0.76, 'duration':5}\")");
+    \"{\\\"instrument\\\":1, \\\"startTime\\\":0.76, \\\"duration\\\":5}\")");
 $results[] = $result;
 //print_r($results);
 /**/?>

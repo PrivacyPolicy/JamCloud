@@ -11,26 +11,23 @@ $rows;
 if ($result == false) die("Select did not work; sucks to be you");
 if ($result->num_rows > 0) {
     //$rows = mysqli_fetch_array($result);
-    echo "[\n";
+    $output = "[\n";
     $rows = $result->fetch_assoc();
     while ($rows) {
-        if ($rows["IP"] == $g_ip) {
-            $rows = $result->fetch_assoc();
-            continue;
-        }
-        echo "{\"timestamp\": {$rows["TIMESTAMP"]}, ";
-        echo "\"IP\": \"{$rows["IP"]}\", ";
-        echo "\"class\": \"{$rows["CLASS"]}\", ";
-        echo "\"objectID\": {$rows["OBJ_ID"]}, ";
-        echo "\"action\": \"{$rows["ACTION"]}\", ";
-        echo "\"data\": {$rows["DATA"]}";
-        echo "}";
+        $output .= "{\"timestamp\": {$rows["TIMESTAMP"]}, ";
+        $output .= "\"IP\": \"{$rows["IP"]}\", ";
+        $output .= "\"class\": \"{$rows["CLASS"]}\", ";
+        $output .= "\"objectID\": {$rows["OBJ_ID"]}, ";
+        $output .= "\"action\": \"{$rows["ACTION"]}\", ";
+        $output .= "\"data\": {$rows["DATA"]}";
+        $output .= "},\n";
         $rows = $result->fetch_assoc();
-        if ($rows) {
-            echo ",\n";
-        }
     }
-    echo "\n]\n";
+    //$output = substr($output, strlen($output) - 6);
+    $output .= "\n]\n";
+    
+    $output = str_replace("},\n\n]", "}\n]", $output);
+    echo $output;
 } else {
     // no new updates
     die("[]");
