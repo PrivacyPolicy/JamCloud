@@ -88,6 +88,8 @@ function stepTimerBar(){
 	$('#timerBar').velocity({left: "500px" },{duration:30000});
 }
 
+$('#playbutton').click(playAll());
+
 // clip constructor: a segment of sound (MIDI music, file audio)
 function Clip(id, startTime, duration, instrument) {
     this.id = id;
