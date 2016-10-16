@@ -86,7 +86,7 @@ function playAll(){
 
 function stepTimerBar(){
 	//var increment = ($('#bpm').val) * ($('.clipTimeline').css('width')/60);
-
+	$('#timerBar').css('left', '200px');
 	$('#timerBar').velocity({left: $('.clipTimeline').css('width') },{duration:($('#bpm').val())*100000/60 });
 
 
@@ -96,7 +96,7 @@ function stepTimerBar(){
 
 function stopAll(){
 	//"acoustic_grand_piano"
-	$('#timerBar').velocity('reverse');
+	$('#timerBar').velocity('finish');
 }
 
 // clip constructor: a segment of sound (MIDI music, file audio)
