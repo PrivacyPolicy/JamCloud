@@ -27,8 +27,11 @@
 		if(mysqli_fetch_array($result) == false){
 			$query = "INSERT INTO $g_table (ID, DATA) VALUES($id, '$data');";
 			$dp = mysqli_query($link, $query);
+            
+            addToUpdateTable();
 		
 			return makeStatus("true", "Created object using query($query)");
+            
 		}else{
 			return makeStatus("false", "Failed to create object");
 		}
@@ -46,6 +49,9 @@
 		}
 		if(!(mysqli_fetch_array($result) == false)){
 			mysqli_query($link, "DELETE FROM $g_table WHERE ID=$id");
+            
+            addToUpdateTable();
+            
 			return makeStatus("true", "Deleted object");
 		}else{
 			return makeStatus("false", "Failed to delete object");
@@ -68,6 +74,9 @@
 		$result = mysqli_query($link, "SELECT * FROM $g_table WHERE ID=$id and IP=$ip");
 		if(mysqli_fetch_array($result) !== false){
 			mysqli_query($link, "UPDATE $g_table SET IP=NULL WHERE ID=$id");
+            
+            addToUpdateTable();
+            
 			return makeStatus("true", "Permission resigned");
 		}else{
 			return makeStatus("false", "Permission for object $id is not granted to $ip");
@@ -85,6 +94,10 @@
 		if(!(mysqli_fetch_array($result)==false)){
 			$update_query= "UPDATE $g_table SET DATA='$data' WHERE ID=$id";
 			mysqli_query($link, $update_query); return makeStatus("true", "Updated object $id via query $update_query");
+            
+            addToUpdateTable();
+            
+            return makeStatus("true", "Updated object");
 		}else{
 			return makeStatus("false", "Failed to update object $id, maybe id does not exist");
 		}
@@ -100,7 +113,26 @@
 		$rval = quitEditObject($g_id,$g_ip);
 	}else if($action=="UPDATE"){
 		$rval = updateObject($g_id,$g_ip,$g_data);
-	}
+    }
+
 	echo($rval);
 
+
+
+    // add the update to the table
+    date_default_timezone_set('UTC');
+    function addToUpdateTable() {
+        $timestamp = time();
+        global $link;
+        global $g_table;
+        global $g_id;
+        global $action;
+        global $data;
+        
+        $query = "INSERT INTO $g_table (TIMESTAMP, CLASS, OBJ_ID, ACTION, DATA)
+            VALUES($timestamp, '$g_table', $g_id, '$action', '$data');";
+        $dp = mysqli_query($link, $query);
+		
+        return makeStatus("true", "Created object using query($query)");
+    }
 ?>
