@@ -86,7 +86,8 @@ function playAll(){
 // 
 function stepTimerBar(){
 	//var increment = ($('#bpm').val) * ($('.clipTimeline').css('width')/60);
-	$('#timerBar').velocity({left: $('.clipTimeline').css('width') },{duration:($('#bpm').val())*100/60 });
+
+	$('#timerBar').velocity({left: $('.clipTimeline').css('width') },{duration:($('#bpm').val())*100000/60 });
 
 	console.log($('#bpm').val());
 }
