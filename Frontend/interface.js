@@ -73,11 +73,12 @@ function buildTable() {
 function playAll(){
 
 	//Concatenate like instrument sounds together
+
 	var allnotes=[{note:'E5', time:0, duration:3}];
     for (var j=0; j < data.clips.length; j++){
         allnotes = allnotes.concat(data.clips[j].notes);
     }
-	// Play each instrument separately all as a single instrument call	
+	// Play each instrument separately all as a single instrument call
 	playNoteSeries("acoustic_grand_piano" , allnotes);
 	stepTimerBar();
 }
