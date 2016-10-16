@@ -144,13 +144,14 @@ function addInstrument(instrument) {
 function createInstrument(){
 	
  	var instrument = {"id":1, "data":{
-	"type":"default",
+	"type":"acoustic_grand_piano",
 	"volume":1,
 	"balance":0}};
 
 	instrument.type = window.prompt("What kind of instrument would you like?","acoustic_grand_piano");
-	//addInstrument(instrument);
-	//buildTable();
+
+	addInstrument(instrument);
+	buildTable();
 }
 
 function addClip(clip) {
