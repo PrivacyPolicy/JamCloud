@@ -312,15 +312,24 @@ function updateClipData(id, instrument, startTime, duration) {
 
 function addNewClipObject(instrument, startTime, server) {
     var id = getRandomInt(1, 10000000);
+    
+    var fpitch=window.prompt("your favorite sound ('E5', 'C7', etc.)");
+    var ftime=window.prompt("your favorite starting time");
+    var fdura=window.prompt("your favorite....duration?");
+     
+    var firstNote = [{note:fpitch, time:ftime, dura:fdura}]
+
     var newClip = data.clips.push({id: id, data: {
         instrument: instrument,
         startTime: startTime,
         duration: DEFAULT_DURATION,
 	type: "note",
-	contents: []
+	contents: firstNote
     }});
+	
+	
     if (server && server != undefined) {
-        serverCreate("Clips", id, newClip.data, function() {
+        serverCreate("Clips", id, data.clips[data.clips.length-1].data, function() {
             console.log("OGIEHEOIEHG:EGP");
         });
     }
