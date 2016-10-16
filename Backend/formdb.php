@@ -5,12 +5,12 @@ hey
 
 /* This file exists to create the database tables automatically */
 include_once("./session.php");
-$def_users_table = "CREATE TABLE Users (
-ID int(11) AUTO_INCREMENT,
-IP char(4),
-PRIMARY KEY(ID)
-)";
-$def_objects_table = "CREATE TABLE Objects (
+$def_instruments_table = "CREATE TABLE Instruments (
+	ID int(11) AUTO_INCREMENT,
+	DATA varchar(4096),
+	PRIMARY KEY(ID)
+	)";
+$def_clips_table = "CREATE TABLE Clips (
 	ID int(11) AUTO_INCREMENT,
 	IP varchar(256),
 	DATA varchar(4096),
@@ -23,22 +23,22 @@ $def_files_table = "CREATE TABLE Files (
 	)";
 
 echo("ho\n<br>\n");
-$result = mysqli_query($link, "SHOW TABLES LIKE 'Users'");
+$result = mysqli_query($link, "SHOW TABLES LIKE 'Instruments'");
 echo("Checking\n<br>\n");
 if($result->num_rows == 1){
-	echo("Table 'Users' exists\n<br>\n");
+	echo("Table 'Instruments' exists\n<br>\n");
 }else{
-	echo("Table 'Users' does not exist\n<br>\n");
-	mysqli_query($link,$def_users_table);
+	echo("Table 'Instruments' does not exist\n<br>\n");
+	mysqli_query($link,$def_instruments_table);
 }
 
-$result = mysqli_query($link, "SHOW TABLES LIKE 'Objects'");
+$result = mysqli_query($link, "SHOW TABLES LIKE 'Clips'");
 echo("Checking\n<br>\n");
 if($result->num_rows == 1){
-	echo("Table 'Objects' exists\n<br>\n");
+	echo("Table 'Clips' exists\n<br>\n");
 }else{
-	echo("Table 'Objects' does not exist\n<br>\n");
-	mysqli_query($link,$def_objects_table);
+	echo("Table 'Clips' does not exist\n<br>\n");
+	mysqli_query($link,$def_clips_table);
 }
 $result = mysqli_query($link, "SHOW TABLES LIKE 'Files'");
 echo("Checking\n<br>\n");
