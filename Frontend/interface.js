@@ -149,8 +149,9 @@ function createInstrument(){
 
 
 function deleteInstrument(event){
-	//event.
-	serverDelete("Instruments", instrument.id);
+	event.target.parent().id;
+	serverDelete("Instruments",  deleteInstrument(event){
+	event.target.parent().id;);
 }
 
 function addClip(clip) {
@@ -315,11 +316,24 @@ function pollUpdates() {
                   Math.floor(Date.now() / 1000),
               null,
               function(result, status) {
-            if (status == "success") {
-                if (result.length > 0) {
-                    //kgfkiuyflgkuyfghvikuyfy
+            if (status == "success" && result.length) {
+                while(result.length > 0) {
+                    handleUpdate(result.pop());
                 }
             }
         });
     });
+}
+
+// given an update data row, do the necessary changes locally
+function handleUpdate(update) {
+    if (update.class == "Clips") {
+        console.log("Handle update");
+        updateClipData(update.objectID,
+                       update.data.instrument,
+                       update.data.startTime,
+                       update.data.duration,
+                       update.data.type,
+                       update.data.contents);
+    }
 }
