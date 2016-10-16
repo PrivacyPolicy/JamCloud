@@ -313,6 +313,8 @@ function addNewClipObject(instrument, startTime, server) {
 	type: "note",
 	contents: []
     }});
+	newClip.data.contents=window.prompt("Give us your best note like: note:'C5', time:2, duration:4");
+	
     if (server && server != undefined) {
         serverCreate("Clips", id, newClip.data, function() {
             console.log("OGIEHEOIEHG:EGP");
