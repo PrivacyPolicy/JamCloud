@@ -172,10 +172,10 @@ function createInstrument(){
 
 
 function deleteInstrument(event){
-	event.target.parent().id;
-	serverDelete("Instruments",  function() {
-	event.target.parent().id;});
-	serverDelete("Instruments",  event.target.parent().id);
+
+	serverDelete("Instruments", event.target.parent().parent().id.substring(event.target.parent().parent().id.indexOf(_)+1), null);
+	buildTable();
+
 }
 
 function addClip(clip) {
