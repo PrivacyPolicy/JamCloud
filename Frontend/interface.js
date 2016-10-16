@@ -311,7 +311,7 @@ function addNewClipObject(instrument, startTime, server) {
         startTime: startTime,
         duration: DEFAULT_DURATION,
 	type: "note",
-	contents: window.prompt("Give us your best note!, ""note:'C5', time:2, duration:4""");
+	contents: window.prompt("Give us your best note!, ""note:'C5', time:2, duration:4""")
     }});
 	
 	
