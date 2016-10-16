@@ -14,9 +14,9 @@ if ($result->num_rows > 0) {
     $rows = $result->fetch_assoc();
     while ($rows) {
         echo "{\"timestamp\": {$rows["TIMESTAMP"]}, ";
-        echo "\"class\": {$rows["CLASS"]}, ";
+        echo "\"class\": \"{$rows["CLASS"]}\", ";
         echo "\"objectID\": {$rows["OBJ_ID"]}, ";
-        echo "\"action\": {$rows["ACTION"]}, ";
+        echo "\"action\": \"{$rows["ACTION"]}\", ";
         echo "\"data\": {$rows["DATA"]}";
         echo "}";
         $rows = $result->fetch_assoc();
