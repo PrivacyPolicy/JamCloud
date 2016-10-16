@@ -38,9 +38,9 @@ def createMIDI(filename, j = '{"0":{"startTime": 0, "duration": 5,"notes":{"0":{
 	for key in keys:
 		notes = []
 		clip = x[key]
-		nkeys = list(clip["notes"]);
+		nkeys = list(clip["contents"]);
 		for nkey in nkeys:
-			note = clip["notes"][nkey]
+			note = clip["contents"][nkey]
 			notes.append(Note(note["pitch"],note["time"],note["duration"]));
 		clips.append(NoteClip(clip["startTime"],clip["duration"],notes))
 		

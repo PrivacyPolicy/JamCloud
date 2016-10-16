@@ -1,6 +1,7 @@
 const OBJECT_CLIP = "Clips";
 const DEFAULT_DURATION = 2;
 const POLL_FREQUENCY = 1; // every 1 second
+const DEFAULT_DURATION = 4;
 var timeScale = 100; // 100 px / second
                      // future: px/beats
 var instrumentTypes = ["acoustic_grand_piano", "acoustic_guitar_steel",
@@ -48,8 +49,6 @@ $(function() {
         if (loadedFiles[0] && loadedFiles[1]) {
             buildTable();
             console.log("Successfully loaded the data");
-            
-            pollUpdates();
         }
     }
     // add 1-time event listeners
@@ -160,6 +159,7 @@ function deleteInstrument(event){
 	event.target.parent().id;
 	serverDelete("Instruments",  function() {
 	event.target.parent().id;});
+	serverDelete("Instruments",  event.target.parent().id);
 }
 
 function addClip(clip) {
@@ -239,9 +239,7 @@ var startDragClip = (function() {
             var clipInd = updateClipData(clipID,
                                          instrID,
                                          newX / timeScale,
-                                         clipData.data.duration,
-                                         "note",
-                                         []);
+                                         clipData.data.duration);
             serverUpdate(OBJECT_CLIP,
                          clipID,
                          data.clips[clipInd].data,
@@ -249,6 +247,7 @@ var startDragClip = (function() {
                 if (status != "success") {
                     console.error("Some kind of weird error occurred");
                 }
+                console.log(JSON.stringify(response) + ", " + status);
             });
         };
         $(document).mousemove(mouseMove).mouseup(end);
@@ -265,15 +264,12 @@ var startDragClip = (function() {
     }
 })();
 
-function updateClipData(id, instrument, startTime,
-                         duration, type, contents) {
+function updateClipData(id, instrument, startTime, duration) {
     var ind = getClipIndexForClipId(id);
     var clip = data.clips[ind];
     clip.data.instrument = instrument;
     clip.data.startTime = startTime;
     clip.data.duration = duration;
-    clip.data.type = type;
-    clip.data.contents = contents;
     buildTable();
     return ind;
 }
@@ -316,6 +312,7 @@ function getRandomInt(min, max) {
 }
 
 function checkForAdd(event) {
+<<<<<<< HEAD
     var xVal = "clientX", yVal = "clientY";
     if ($(event.target).is(".clipTimeline")) { // clicked the background
         var $tempInstrument = $("#instrumentTemplate");

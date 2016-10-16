@@ -23,6 +23,7 @@ body {
 	height: 15px;
 	background:red;
 	z-index: 99999;
+	font-size: 15px;
 }
 
 .instrument {
