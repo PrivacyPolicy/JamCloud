@@ -143,7 +143,7 @@ function createInstrument(){
 
 function deleteInstrument(event){
 	event.target.parent().id;
-	serverDelete("Instruments",  event.target.parent().id;);
+	serverDelete("Instruments",  event.target.parent().id);
 }
 
 function addClip(clip) {
