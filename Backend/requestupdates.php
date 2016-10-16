@@ -26,5 +26,6 @@ if ($result->num_rows > 0) {
     }
     echo "\n]\n";
 } else {
-    die("something didn't work out right; sucks to be you");
+    // no new updates
+    die("[]");
 }

@@ -149,7 +149,8 @@ function createInstrument(){
 	"balance":0}};
 
 	instrument.type = window.prompt("What kind of instrument would you like?","acoustic_grand_piano");
-
+	
+	serverCreate("Instruments", instrument.id,{type:instrument.data.type, volume:instrument.data.volume, balance:instrument.data.volume} ,null);
 	addInstrument(instrument);
 	buildTable();
 }
@@ -239,6 +240,7 @@ var startDragClip = (function() {
                 if (status != "success") {
                     console.error("Some kind of weird error occurred");
                 }
+                console.log(JSON.stringify(response) + ", " + status);
             });
         };
         $(document).mousemove(mouseMove).mouseup(end);
