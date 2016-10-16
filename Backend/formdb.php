@@ -22,6 +22,16 @@ $def_files_table = "CREATE TABLE Files (
 	FP varchar(256),
 	PRIMARY KEY(ID)
 	)";
+$def_updates_table = "CREATE TABLE Updates (
+    ID int(11) AUTO_INCREMENT,
+    TIMESTAMP int(13),
+    CLASS varchar(256),
+    OBJ_ID int(11),
+    ACTION varchar(256),
+    DATA varchar(4096),
+    PRIMARY KEY(ID)
+    )";
+    
 
 echo("ho\n<br>\n");
 $result = mysqli_query($link, "SHOW TABLES LIKE 'Instruments'");
@@ -48,6 +58,14 @@ if($result->num_rows == 1){
 }else{
 	echo("Table 'Files' does not exist\n<br>\n");
 	mysqli_query($link,$def_files_table);
+}
+$result = mysqli_query($link, "SHOW TABLES LIKE 'Updates'");
+echo("Checking\n<br>\n");
+if($result->num_rows == 1){
+	echo("Table 'Updates' exists\n<br>\n");
+}else{
+	echo("Table 'Updates' does not exist\n<br>\n");
+	mysqli_query($link,$def_updates_table);
 }
 /**/?>
 </body>
