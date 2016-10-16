@@ -1,3 +1,4 @@
+const OBJECT_CLIP = "Clips";
 var timeScale = 100; // 100 px / second
                      // future: px/beats
 var instrumentTypes = ["acoustic_grand_piano", "acoustic_guitar_steel",
@@ -137,12 +138,8 @@ var startDragClip = (function() {
     const xVal = "clientX", yVal = "clientY", dragging = "dragging";
     var oldStartLeft = -1, oldMouseX = -1,
         oldInstrument = -1,
-        instrumentHeight = -1;
-    $(function() {
-        var $instrument = $("#instrumentTemplate");
-        instrumentHeight = $instrument.height() +
-            parseInt($instrument.css("margin-bottom"));
-    });
+        instrumentHeight = -1,
+        $newInstrument;
     return function(event) {
         var $clip = $(event.target);
         $clip.addClass(dragging);
@@ -150,6 +147,12 @@ var startDragClip = (function() {
         oldMouseX = parseFloat(event[xVal]);
         oldInstrument = parseInt($clip.parentsUntil("#content").last()
                                  .attr("id").split("_")[1]);
+        
+        var $tempInstrument = $("#instrumentTemplate");
+        instrumentHeight = $tempInstrument.height() +
+            parseInt($tempInstrument.css("margin-bottom"));
+        
+        var $instruments = $(".instrument:not(.persistant)");
         var mouseMove = function(event) {
             // Handle x movement
             var deltaX = event[xVal] - oldMouseX;
@@ -158,29 +161,34 @@ var startDragClip = (function() {
             $clip.css("left", newX + "px");
             
             // handle y movement (change of instrument)
-            var $instrument = whichInstrumentForY(event[yVal]);
-            console.log($instrument);
+            $newInstrument = whichInstrumentForY($instruments,
+                                                 event[yVal],
+                                                 instrumentHeight);
+            if ($newInstrument != null) {
+                var newY = $newInstrument.position().top;
+                $clip.css("top", newY + "px");
+            }
         };
         var end = function(event) {
             $clip.removeClass(dragging);
             $(document).off("mouseup", end)
                 .off("mousemove", mouseMove);
+            // Update the server
+            serverUpdate(OBJECT_CLIP, 
         };
         $(document).mousemove(mouseMove).mouseup(end);
     }
-    // find which instrument the y-position is referring to
-    function whichInstrumentForY(y) {
-        var $instruments = $(".instrument:not(.persistant)");
-        console.log($instruments);
-        for (var i = 0; i < $instruments.size(); i++) {
-            if ((i + 1) * instrumentHeight > y) {
-                //var newY = (i - 1) * instrumentHeight;
-                //$clip.css("top", newY + "px");
-                return $instruments.eq(i);
-//                $clip.appendTo(
-//                    $instruments.eq(i).find(".clipTimeline"));
-//                break;
-            }
+})();
+// find which instrument the y-position is referring to
+function whichInstrumentForY($instruments, y, instrumentHeight) {
+    console.log(instrumentHeight);
+    var size = $instruments.size();
+    for (var i = 0; i < size; i++) {
+        if ((i + 1) * instrumentHeight > y) {
+            //console.log($instruments.eq(i));
+            return $instruments.eq(i);
         }
     }
-})();
+    return null;
+}
+

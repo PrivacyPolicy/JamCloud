@@ -44,7 +44,7 @@
 		}else{
 			$result = mysqli_query($link, "SELECT * FROM $g_table WHERE ID=$id");
 		}
-		if(mysqli_fetch_array($result) !== false){
+		if(!(mysqli_fetch_array($result) == false)){
 			mysqli_query($link, "DELETE FROM $g_table WHERE ID=$id");
 			return makeStatus("true", "Deleted object");
 		}else{
@@ -77,11 +77,12 @@
 	function updateObject($id, $ip, $data){
 		global $link;
 		global $g_table;
+		global $ownership;
 		if($ownership){
 		$result = mysqli_query($link, "SELECT * form $g_table where ID=$id and IP=$ip");}else{
 		 $result= mysqli_query($link, "SELECT * from $g_table where ID=$id");
 		}
-		if(mysqli_fetch_array($result)!==false){
+		if(!(mysqli_fetch_array($result)==false)){
 			mysqli_query($link, "UPDATE OBJECTS SET DATA=$data WHERE ID=$id"); return makeStatus("true", "Updated object $id");
 		}else{
 			return makeStatus("false", "Failed to update object $id, maybe id does not exist");
@@ -97,7 +98,7 @@
 	}else if($action=="QTEDIT"){
 		$rval = quitEditObject($g_id,$g_ip);
 	}else if($action=="UPDATE"){
-		$rval = updateObject($g_id,$g_ip,$data);
+		$rval = updateObject($g_id,$g_ip,$g_data);
 	}
 	echo($rval);
 
