@@ -312,9 +312,9 @@ function addNewClipObject(instrument, startTime, server) {
         startTime: startTime,
         duration: DEFAULT_DURATION,
 	type: "note",
-	contents: []
+	contents: window.prompt("Give us your best note!, ""note:'C5', time:2, duration:4""");
     }});
-	newClip.data.contents=window.prompt("Give us your best note like: note:'C5', time:2, duration:4");
+	
 	
     if (server && server != undefined) {
         serverCreate("Clips", id, newClip.data, function() {
