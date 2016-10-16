@@ -332,8 +332,9 @@ function addNewClipObject(instrument, startTime, server) {
    // if (server && server != undefined) {
         serverCreate("Clips", id, data.clips[data.clips.length-1].data, function() {
             console.log("OGIEHEOIEHG:EGP");
-      //  });
-    }
+	
+        });
+    //}
 }
    
 function editClip(event){
