@@ -29,11 +29,12 @@ function serverUpdate(type, id, data, callback) {
            callback, "json");
 }
 
-function serverCreate(type, id, callback) {
+function serverCreate(type, id, data, callback) {
     $.post(PHP_OBJECT_COMMAND,
            {"ACTION": "CREATE",
             "CLASS": type,
-            "ID": id},
+            "ID": id,
+            "DATA": data},
            callback, "json");
 }
 
