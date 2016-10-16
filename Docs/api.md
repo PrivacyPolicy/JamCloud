@@ -8,6 +8,9 @@ objectcommand.php allows a frontend to interact with the JamCloud database
 **ACTION** - The interaction command  
 **DATA** - Object JSON data  
 
+### Return Data
+`{"status":status,"message":"<message>"}`
+
 ### Actions
 **UPDATE** - Update object (requires data)
 **DELETE** - Delete object
@@ -17,12 +20,12 @@ objectcommand.php allows a frontend to interact with the JamCloud database
 getdata.php returns objects as JSON
 ### POST/GET Request Prameters
 **CLASS** - can be "Instruments or "Clips"
-### Return data
+### Return Data
 Returns as JSON in the format:  
   
     {
         {"id":5,
-        "data":<OBJECT DATA in JSON FORMAT>}},
+        "data":<OBJECT DATA IN JSON FORMAT>}},
 	{"id":256,
-	"data":<OBJECT DATA in JSON Format>}
+	"data":<OBJECT DATA IN JSON FORMAT>}
     }
