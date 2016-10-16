@@ -4,26 +4,28 @@ var ac = new AudioContext();
 function Sound(src){
 	
 	this.audio = new Audio(src);
-
 	function play(){
 		audio.play;
 	}
 }
 
 //Discrete notes from a certain instrument
-function Note(instrument, tone){
+function playNote(instrument, tone, length){
 	//Load an instrument from the online repo
 	//Do this by entering your own URL or just using the default https://gleitz.github.io/midi-js-soundfonts/
-	var instr = Soundfont.instrument(ac, instrument); 
-	//e.g. 'C4', 'G3', etc.
-	var t = tone;
+	Soundfont.instrument(ac, instrument)
+        .then(function(instrument) {
+        
+        instrument.play(tone, ac.currentTime, {duration:length});
 
-	//guess what this does......
-	function play(){
-		instr.play(t);
-	}
+	//instrument.schedule(ac.currentTime + 5, [{time:0, note: 60},{time: 3, note: 70}]);
+    }); 
+}
 
-	function stop(){
-		instr.stop();
-	}
+
+function playNoteSeries(instrument, notes){
+	Soundfont.instrument(ac, instrument)
+        	.then(function(instrument) {
+		
+		instrument.schedule(ac.currentTime, [{time:0, note: 60},{time: 3, note: 70}]);
 }
