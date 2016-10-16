@@ -8,27 +8,27 @@ var data = {
             id: 1,
             type: 0, // instruments[0] == "Piano"
             clips: [
-                new Clip(1, 0, 2, 0),
-                new Clip(2, 3, 4, 0),
-                new Clip(3, 8, 1, 0)
+                new noteClip(1, 0, 2, 0),
+                new noteClip(2, 3, 4, 0),
+                new noteClip(3, 8, 1, 0)
                 ]
         },
         {
             id: 2,
             type: 2, // instruments[2] == "Drum"
             clips: [
-                new Clip(4, 2, 20, 2),
-                new Clip(5, 4, 4, 2),
-                new Clip(6, 3, 1, 2)
+                new noteClip(4, 2, 20, 2),
+                new noteClip(5, 4, 4, 2),
+                new noteClip(6, 3, 1, 2)
                 ]
         },
         {
             id: 3,
-            type: 3, // instruments[3] == "Electric Guitar"
+            type: 4, // instruments[3] == "Electric Guitar"
             clips: [
-                new Clip(7, 1, 2, 3),
-                new Clip(8, 3, 4, 3),
-                new Clip(9, 2, 1, 3)
+                new noteClip(7, 1, 2, 3),
+                new noteClip(8, 3, 4, 3),
+                new noteClip(9, 2, 1, 3)
                 ]
         }
         ]
@@ -37,6 +37,21 @@ var data = {
 $(function() {
     buildTable();
 });
+
+
+// Plays the whole piece. Initiates all sound and moves the timer bar.
+function playAll(){
+	for (var i=0; i<data.instruments.length; i++){
+		for (var j=0; j<data.instruments[i].clips.length; j++){
+			playNoteSeries("acoustic_grand_piano" , data.instruments[i].clips[j].notes);
+		}
+	}
+}
+
+// 
+function stepTimerBar(){
+
+}
 
 // clip constructor: a segment of sound (MIDI music, file audio)
 function Clip(id, startTime, duration, instrument) {
@@ -48,13 +63,14 @@ function Clip(id, startTime, duration, instrument) {
 // a type of clip: specifically, it contains notes
 function noteClip(startTime, duration, instrument, notes) {
                 notes = [
-                    {pitch: 'C4', startTime: 2.4, duration: 1.3},
-		    {pitch: 'E4', startTime: 2.6, duration: 1.3},
-                    {pitch: 'G4', startTime: 2.8, duration: 1.3}
-                ]
+                    {pitch: 'C4', startTime: 2.4, duration: 1.3}]
+	//	    {pitch: 'E4', startTime: 2.6, duration: 1.3},
+  //                  {pitch: 'G4', startTime: 2.8, duration: 1.3}
+//                ]
     Clip.call(this);
     //this = new Clip(startTime, duration, instrument);
     this.notes = notes;
+	//playNoteSeries("acoustic_grand_piano", this.notes);
 }
 
 function waveClip(startTime, duration, instrument, fileURL) {
