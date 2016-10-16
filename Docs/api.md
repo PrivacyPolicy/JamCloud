@@ -19,9 +19,10 @@ getdata.php returns objects as JSON
 **CLASS** - can be "Instruments or "Clips"
 ### Return data
 Returns as JSON in the format:  
+  
     {
-        {"id":5
+        {"id":5,
         "data":{<OBJECT DATA>}},
-	{"id":256
+	{"id":256,
 	"data":{<OBJECT DATA>}}
     }
