@@ -19,8 +19,9 @@ body {
 }
 
 #instrumentRemove {
-	width: 20px;
-	background:green;
+	width: 15px;
+	height: 15px;
+	background:red;
 	z-index: 99999;
 }
 

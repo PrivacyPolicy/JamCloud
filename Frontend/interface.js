@@ -107,26 +107,10 @@ function Clip(id, startTime, duration, instrument) {
     this.startTime = startTime;
     this.duration = duration;
     this.instrument = instrument;
+    this.type = note;
+    this.contents = [];
 }
-// a type of clip: specifically, it contains notes
-function noteClip(notes, instrument) {
-      //notes object should be of the form: notes = [{note: "C4", time: 1, duration: 1},{....}]
-	
-	    Clip.call(this);  
-	    this.notes = notes;
-		
-		this.addNote = function(newnote, newtime, newduration){
-			this.notes = this.notes.concat({note:newnote, time:newtime, duration:newduration });
-		}
-}
-
-function waveClip(startTime, duration, instrument, fileURL) {
-    Clip.call(this);
-    this.fileURL = fileURL;
-    // TODO cache the file
-}
-
-// 
+ 
 function addInstrument(instrument) {
 
     // Make a copy of the template
