@@ -66,6 +66,7 @@ function buildTable() {
     $(".clip").mousedown(startDragClip);
     $("#content").click(checkForAdd);
     $('#playButton').click(playAll);
+    $('#stopButton').click(stopAll);
 
 }
 
@@ -83,7 +84,6 @@ function playAll(){
 	stepTimerBar();
 }
 
-// 
 function stepTimerBar(){
 	//var increment = ($('#bpm').val) * ($('.clipTimeline').css('width')/60);
 
@@ -93,6 +93,11 @@ function stepTimerBar(){
 	console.log(($('#bpm').val())*100000/60);
 }
 
+
+function stopAll(){
+	//"acoustic_grand_piano"
+	$('#timerBar').velocity('reverse');
+}
 
 // clip constructor: a segment of sound (MIDI music, file audio)
 function Clip(id, startTime, duration, instrument) {
