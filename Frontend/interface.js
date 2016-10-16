@@ -65,7 +65,7 @@ function buildTable() {
     // add event listeners
     $(".clip").mousedown(startDragClip);
     $("#content").click(checkForAdd);
-    $('#playbutton').click(playAll);
+    $('#playButton').click(playAll);
 
 }
 
