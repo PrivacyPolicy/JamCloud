@@ -3,6 +3,7 @@ body {
     background: honeydew;
     color: aquamarine;
     overflow: scroll;
+    -webkit-user-select: none;
 }
 
 .hidden {
@@ -64,6 +65,12 @@ body {
     background: linear-gradient(to bottom,
         #0058ff, #2900cc);
     box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+    transition: transform .5s, box-shadow .5s;
+}
+.clip.dragging {
+    transform: scale(1.05);
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, .2);
+    z-index: 99998 !important;
 }
 .clip > .text, .instrumentSettings > .text {
     padding: 5px;
