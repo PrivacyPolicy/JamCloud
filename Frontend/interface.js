@@ -67,7 +67,7 @@ function buildTable() {
     $("#content").click(checkForAdd);
     $('#playButton').click(playAll);
     $('#stopButton').click(stopAll);
-    $('#newIstr').click(createInstrument);
+    $('#newInstr').click(createInstrument);
 
 }
 
@@ -142,11 +142,15 @@ function addInstrument(instrument) {
 }
 
 function createInstrument(){
-	var instrument;
-	instrument.name=window.prompt("What kind of instrument would you like?","acoustic_grand_piano");
-	instrument.id=42;
-	instrument.data.type=0;
-	addInstrument(instrument);
+	
+ 	var instrument = {"id":1, "data":{
+	"type":"default",
+	"volume":1,
+	"balance":0}};
+
+	instrument.type = window.prompt("What kind of instrument would you like?","acoustic_grand_piano");
+	//addInstrument(instrument);
+	//buildTable();
 }
 
 function addClip(clip) {
