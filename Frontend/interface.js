@@ -1,7 +1,6 @@
 const OBJECT_CLIP = "Clips";
 const DEFAULT_DURATION = 2;
 const POLL_FREQUENCY = 1; // every 1 second
-const DEFAULT_DURATION = 4;
 var timeScale = 100; // 100 px / second
                      // future: px/beats
 var instrumentTypes = ["acoustic_grand_piano", "acoustic_guitar_steel",
@@ -53,6 +52,8 @@ $(function() {
     }
     // add 1-time event listeners
     $("#content").click(checkForAdd);
+    
+    pollUpdates();
 });
 
 function buildTable() {
@@ -248,7 +249,6 @@ var startDragClip = (function() {
                 if (status != "success") {
                     console.error("Some kind of weird error occurred");
                 }
-                console.log(JSON.stringify(response) + ", " + status);
             });
         };
         $(document).mousemove(mouseMove).mouseup(end);
@@ -319,7 +319,6 @@ function getRandomInt(min, max) {
 }
 
 function checkForAdd(event) {
-<<<<<<< HEAD
     var xVal = "clientX", yVal = "clientY";
     if ($(event.target).is(".clipTimeline")) { // clicked the background
         var $tempInstrument = $("#instrumentTemplate");
@@ -347,6 +346,7 @@ function pollUpdates() {
               null,
               function(result, status) {
             if (status == "success" && result.length) {
+                console.log("Update due");
                 while(result.length > 0) {
                     handleUpdate(result.pop());
                 }
