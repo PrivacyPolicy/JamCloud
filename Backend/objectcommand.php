@@ -91,9 +91,12 @@
 		$result = mysqli_query($link, "SELECT * from $g_table where ID=$id and IP=$ip");}else{
 		 $result= mysqli_query($link, "SELECT * from $g_table where ID=$id");
 		}
+//        echo "SELECT * from $g_table where ID=$id and IP=$ip";
+//        print_r($link);
 		if(!(mysqli_fetch_array($result)==false)){
 			$update_query= "UPDATE $g_table SET DATA='$data' WHERE ID=$id";
 			mysqli_query($link, $update_query);
+            //print_r($link);
             
             addToUpdateTable();
             
@@ -123,7 +126,7 @@
     // add the update to the table
     date_default_timezone_set('UTC');
     function addToUpdateTable() {
-        $timestamp = time();
+        $timestamp = microtime();
         global $link;
         global $g_table;
         global $g_id;
