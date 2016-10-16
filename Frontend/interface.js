@@ -9,27 +9,27 @@ var data = {
             id: 1,
             type: 0, // instruments[0] == "Piano"
             clips: [
-                new noteClip("C3", 0, 1, 0),
-                new noteClip("C4", 1, 1, 0),
-                new noteClip("C5", 2, 1, 0)
+                new noteClip({note:"C3", time:0, duration:1}, 0),
+                new noteClip({note:"C4", time:1, duration:1}, 0),
+                new noteClip({note:"C5", time:2, duration:1}, 0)
                 ]
         },
         {
             id: 2,
             type: 2, // instruments[2] == "Drum"
             clips: [
-                new noteClip("D3", 3, 1, 2),
-                new noteClip("D4", 4, 1, 2),
-                new noteClip("D5", 5, 1, 2)
+                new noteClip({note:"D3", time:3, duration:1}, 2),
+                new noteClip({note:"D4", time:4, duration:1}, 2),
+                new noteClip({note:"D5", time:5, duration:1}, 2)
                 ]
         },
         {
             id: 3,
             type: 4, // instruments[3] == "Electric Guitar"
             clips: [
-                new noteClip("E3", 6, 1, 3),
-                new noteClip("E4", 7, 1, 3),
-                new noteClip("E5", 8, 1, 3)
+                new noteClip({note:"E3", time:6, duration:1}, 3),
+                new noteClip({note:"E4", time:7, duration:1}, 3),
+                new noteClip({note:"E5", time:8, duration:1}, 3)
                 ]
         }
         ]
@@ -92,7 +92,6 @@ function playAll(){
 // 
 function stepTimerBar(){
 	//var increment = ($('#bpm').val) * ($('.clipTimeline').css('width')/60);
-	//$('#timerBar').css('left',$('#timerBar').css('left')+increment);
 	$('#timerBar').velocity({left: "500px" },{duration:30000});
 
 }
@@ -105,10 +104,8 @@ function Clip(id, startTime, duration, instrument) {
     this.instrument = instrument;
 }
 // a type of clip: specifically, it contains notes
-function noteClip(notes, startTime, noteDuration, instrument) {
-                notes = [
-                    {note: notes, time: startTime, duration: noteDuration}]
-
+function noteClip(notes, instrument) {
+      //notes object should be of the form: notes = [{note: "C4", time: 1, duration: 1},{....}]
 	
 	    Clip.call(this);  
 	    this.notes = notes;
