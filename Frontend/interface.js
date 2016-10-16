@@ -90,7 +90,7 @@ function stepTimerBar(){
 	$('#timerBar').velocity({left: $('.clipTimeline').css('width') },{duration:($('#bpm').val())*100000/60 });
 
 
-	console.log($('#bpm').val());
+	console.log(($('#bpm').val())*100000/60);
 }
 
 
