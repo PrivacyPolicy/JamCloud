@@ -16,3 +16,32 @@ function contactAPI(page, params){
             ,
         })); 
 } 
+
+
+//const OBJECT_TYPES = ["Clips", "Instruments"];
+const PHP_OBJECT_COMMAND = "../Backend/objectcommand.php";
+function serverUpdate(type, id, data, callback) {
+    console.log(data);
+    $.post(PHP_OBJECT_COMMAND,
+           {"ACTION": "UPDATE",
+            "CLASS": type,
+            "ID": id,
+            "DATA": JSON.stringify(data)},
+           callback, "json");
+}
+
+function serverCreate(type, id, callback) {
+    $.post(PHP_OBJECT_COMMAND,
+           {"ACTION": "CREATE",
+            "CLASS": type,
+            "ID": id},
+           callback, "json");
+}
+
+function serverDelete(type, id, callback) {
+    $.post(PHP_OBJECT_COMMAND,
+           {"ACTION": "DELETE",
+            "CLASS": type,
+            "ID": id},
+           callback, "json");
+}
