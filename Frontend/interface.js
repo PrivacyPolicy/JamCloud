@@ -1,5 +1,6 @@
 const OBJECT_CLIP = "Clips";
 const DEFAULT_DURATION = 4;
+const POLL_FREQUENCY = 1; // every 1 second
 var timeScale = 100; // 100 px / second
                      // future: px/beats
 var instrumentTypes = ["acoustic_grand_piano", "acoustic_guitar_steel",
@@ -16,6 +17,8 @@ $(function() {
           null,
           function(result, status) {
         if (status == "success") {
+            // prevent errors with incomplete instrumentSettings
+            result = result.split("\"data\":}").join("\"data\":{}}");
             data.instruments = JSON.parse(result);
             loadedFiles[0] = true;
             bothLoaded(loadedFiles);
@@ -28,6 +31,8 @@ $(function() {
           null,
           function(result, status) {
         if (status == "success") {
+            // prevent errors with incomplete instrumentSettings
+            result = result.split("\"data\":}").join("\"data\":{}}");
             data.clips = JSON.parse(result);
             loadedFiles[1] = true;
             bothLoaded(loadedFiles);
@@ -41,6 +46,8 @@ $(function() {
         if (loadedFiles[0] && loadedFiles[1]) {
             buildTable();
             console.log("Successfully loaded the data");
+            
+            pollUpdates();
         }
     }
 });
@@ -224,7 +231,9 @@ var startDragClip = (function() {
             var clipInd = updateClipData(clipID,
                                          instrID,
                                          newX / timeScale,
-                                         clipData.data.duration);
+                                         clipData.data.duration,
+                                         "note",
+                                         []);
             serverUpdate(OBJECT_CLIP,
                          clipID,
                          data.clips[clipInd].data,
@@ -232,7 +241,6 @@ var startDragClip = (function() {
                 if (status != "success") {
                     console.error("Some kind of weird error occurred");
                 }
-                console.log(JSON.stringify(response) + ", " + status);
             });
         };
         $(document).mousemove(mouseMove).mouseup(end);
@@ -249,12 +257,15 @@ var startDragClip = (function() {
     }
 })();
 
-function updateClipData(id, instrument, startTime, duration) {
+function updateClipData(id, instrument, startTime,
+                         duration, type, contents) {
     var ind = getClipIndexForClipId(id);
     var clip = data.clips[ind];
     clip.data.instrument = instrument;
     clip.data.startTime = startTime;
     clip.data.duration = duration;
+    clip.data.type = type;
+    clip.data.contents = contents;
     buildTable();
     return ind;
 }
@@ -288,4 +299,28 @@ function getRandomInt(min, max) {
 
 function checkForAdd(event) {
     console.log(event.target);
+    // TODO add if the target is the background
+}
+
+// a function to run a function every x seconds
+function everyXSeconds(x, func) {
+    func();
+    setTimeout(function() {everyXSeconds(x, func);}, x * 1000);
+}
+
+// poll the database occasionally to see what updates have occured:
+// any updates should be handled
+function pollUpdates() {
+    everyXSeconds(POLL_FREQUENCY, function() {
+        $.getJSON("../Backend/requestupdates.php?TIMESTAMP=" +
+                  Math.floor(Date.now() / 1000),
+              null,
+              function(result, status) {
+            if (status == "success") {
+                if (result.length > 0) {
+                    //kgfkiuyflgkuyfghvikuyfy
+                }
+            }
+        });
+    });
 }
