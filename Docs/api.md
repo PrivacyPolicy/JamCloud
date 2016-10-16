@@ -40,4 +40,4 @@ Creates MIDI in corgy/audio based on form data
 
 Example JSON:  
 
-`{"0":{"startTime": 0, "duration": 5,"notes":{"0":{"pitch":65, "time":1,"duration":6}}}}`
+`{"0":{"startTime": 0, "duration": 5,"contents":{"0":{"pitch":65, "time":1,"duration":6}}}}`
