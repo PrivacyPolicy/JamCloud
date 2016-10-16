@@ -234,6 +234,7 @@ var startDragClip = (function() {
                 if (status != "success") {
                     console.error("Some kind of weird error occurred");
                 }
+                console.log(JSON.stringify(response) + ", " + status);
             });
         };
         $(document).mousemove(mouseMove).mouseup(end);
