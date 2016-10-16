@@ -4,39 +4,46 @@ var timeScale = 100; // 100 px / second
 var instrumentTypes = ["acoustic_grand_piano", "acoustic_guitar_steel",
                        "Drum", "acoustic_guitar_steel"];
 var data = {
-    instruments: [
-        {
-            id: 1,
-            type: 0, // instruments[0] == "Piano"
-            clips: [
-                new Clip(1, 0, 2, 0),
-                new Clip(2, 3, 4, 0),
-                new Clip(3, 8, 1, 0)
-                ]
-        },
-        {
-            id: 2,
-            type: 2, // instruments[2] == "Drum"
-            clips: [
-                new Clip(4, 2, 2, 2),
-                new Clip(5, 4, 4, 2),
-                new Clip(6, 3, 1, 2)
-                ]
-        },
-        {
-            id: 3,
-            type: 3, // instruments[3] == "Electric Guitar"
-            clips: [
-                new Clip(7, 1, 2, 3),
-                new Clip(8, 3, 4, 3),
-                new Clip(9, 2, 1, 3)
-                ]
-        }
-        ]
+    instruments: [],
+    clips: []
 };
 
 $(function() {
-    buildTable();
+    console.log("Loading...");
+    var loadedFiles = [false, false];
+    $.get("../Backend/getdata.php?CLASS=Instruments",
+          null,
+          function(result, status) {
+        if (status == "success") {
+            data.instruments = JSON.parse(result);
+            loadedFiles[0] = true;
+            bothLoaded(loadedFiles);
+            return;
+        }
+        // error occurred
+        console.error(data + ": Error occurred, didn't load data. :(");
+    });
+    $.get("../Backend/getdata.php?CLASS=Clips",
+          null,
+          function(result, status) {
+        if (status == "success") {
+            console.log("SOMETHING: " + result);
+            console.log(JSON.stringify(JSON.parse(result)));
+            data.clips = JSON.parse(result);
+            loadedFiles[1] = true;
+            bothLoaded(loadedFiles);
+            return;
+        }
+        // error occurred
+        console.error(data + ": Error occurred, didn't load data. :(");
+    });
+    
+    function bothLoaded(loadedFiles) {
+        if (loadedFiles[0] && loadedFiles[1]) {
+            buildTable();
+            console.log("Successfully loaded the data");
+        }
+    }
 });
 
 // clip constructor: a segment of sound (MIDI music, file audio)
@@ -72,8 +79,13 @@ function buildTable() {
     for (var i = 0; i < data.instruments.length; i++) {
         addInstrument(data.instruments[i]);
     }
+    for (var j = 0; j < data.clips.length; j++) {
+        addClip(data.clips[j]);
+    }
     if (i === 0) { // No instruments: new file
         // TODO show new file options
+    } else if (j === 0) { // there are instruments, just no clips yet
+        // TODO show add clips options
     }
     
     // add event listeners
@@ -89,16 +101,12 @@ function addInstrument(instrument) {
     // edit the template values
     $temp.removeClass("persistant").removeClass("hidden");
     $temp.find(".instrumentSettings > .text").text(
-        instrumentTypes[instrument.type]);
-    // add the clips
-    for (var i = 0; i < instrument.clips.length; i++) {
-        addClip($temp, instrument.clips[i]);
-    }
+        instrument.data.type);
 
     // add the newly-filled template to the list
     $temp.insertBefore("#instrumentAdd");
 }
-function addClip($instrument, clip) {
+function addClip(clip) {
     // copy the template
     var template = $("#clipTemplate").get(0).cloneNode(true);
     template.id = "clip_" + clip.id;
@@ -107,14 +115,15 @@ function addClip($instrument, clip) {
     // edit the template values
     $clipElem.removeClass("persistant").removeClass("hidden");
     $clipElem
-        .css({left: (timeScale * clip.startTime) + "px",
-              width: (timeScale * clip.duration) + "px",
-              zIndex: parseInt(clip.startTime)})
+        .css({left: (timeScale * clip.data.startTime) + "px",
+              width: (timeScale * clip.data.duration) + "px",
+              zIndex: parseInt(clip.data.startTime)})
     .find(".text")
         .text("TODO content");
 
     // add the newly-filled template to the list
-    $instrument.find(".clipTimeline").append($clipElem);
+    $("#instrument_" + clip.data.instrument)
+        .find(".clipTimeline").append($clipElem);
 }
 
 // This is a closure. I'm not explaining JS closures today.
@@ -133,7 +142,8 @@ var startDragClip = (function() {
         oldMouseX = parseFloat(event[xVal]);
         oldInstrument = parseInt($clip.parentsUntil("#content").last()
                                  .attr("id").split("_")[1]);
-        oldStartTop = $clip.position().top;
+        oldStartTop = $clip.parentsUntil("#content").last()
+            .position().top;
         var newX = -1;
         oldScrollX = $(window).scrollLeft();
         
@@ -154,7 +164,7 @@ var startDragClip = (function() {
             $newInstrument = whichInstrumentForY($instruments,
                                                  event[yVal],
                                                  instrumentHeight);
-            if ($newInstrument != null) {console.log(oldStartTop);
+            if ($newInstrument != null) {
                 var newY = $newInstrument.position().top - oldStartTop;
                 $clip.css("top", newY + "px");
             } else {
@@ -173,8 +183,8 @@ var startDragClip = (function() {
             serverUpdate(OBJECT_CLIP,
                          clipID,
                          {"instrument": instrID,
-                          "startTime": parseInt(newX / timeScale),
-                          "duration": clipData.duration},
+                          "startTime": newX / timeScale,
+                          "duration": clipData.data.duration},
                          function(response, status) {
                 console.log(JSON.stringify(response) + "\n\n" + status);
             });
@@ -184,11 +194,9 @@ var startDragClip = (function() {
 })();
 // find which instrument the y-position is referring to
 function whichInstrumentForY($instruments, y, instrumentHeight) {
-    console.log(instrumentHeight);
     var size = $instruments.size();
     for (var i = 0; i < size; i++) {
         if ((i + 1) * instrumentHeight > y) {
-            //console.log($instruments.eq(i));
             return $instruments.eq(i);
         }
     }
@@ -196,12 +204,9 @@ function whichInstrumentForY($instruments, y, instrumentHeight) {
 }
     
 function getClipIndexForClipId(id) {
-    for (var i = 0; i < data.instruments.length; i++) {
-        var clips = data.instruments[i].clips;
-        for (var j = 0; j < clips.length; j++) {
-            if (clips[j].id == id) {
-                return clips[j];
-            }
+    for (var i = 0; i < data.clips.length; i++) {
+        if (data.clips[i].id == id) {
+            return data.clips[i];
         }
     }
 }
