@@ -7,7 +7,10 @@ var instrumentTypes = ["acoustic_grand_piano", "acoustic_guitar_steel",
                        "Drum", "acoustic_guitar_steel"];
 var data = {
     instruments: [],
-    clips: []
+        clips: [{"id":783918, "data":{"instrument":1,"startTime":0.49,"duration":2,"type":"note","contents":[{'E2', 1, 4},{'E3', 1, 4},{'E5', 1, 4}]}},
+		{"id":783918, "data":{"instrument":1,"startTime":0.49,"duration":2,"type":"note","contents":[{'F2', 1, 4},{'F3', 1, 4},{'F5', 1, 4}]}},
+		{"id":783918, "data":{"instrument":1,"startTime":0.49,"duration":2,"type":"note","contents":[{'G2', 1, 4},{'G3', 1, 4},{'G5', 1, 4}]}},
+		{"id":783918, "data":{"instrument":1,"startTime":0.49,"duration":2,"type":"note","contents":[{'A2', 1, 4},{'A3', 1, 4},{'A5', 1, 4}]}}]
 };
 function addNoteToClip(id, pitch, time, duration){
 	var e = false;var i;
@@ -111,7 +114,7 @@ function playAll(){
 
 	var allnotes=[{note:'E5', time:0, duration:3}];
     	for (var j=0; j < data.clips.length; j++){
-        	allnotes = allnotes.concat(data.clips[j].notes);
+        	allnotes = allnotes.concat(data.clips[j].data.contents);
     	}
 	// Play each instrument separately all as a single instrument call
 	playNoteSeries("acoustic_grand_piano" , allnotes);
@@ -172,7 +175,7 @@ function createInstrument(){
 	buildTable();
 }
 
-
+//doesnt work
 function deleteInstrument(event){
 	
 	console.log(event.target.parent.parent.id.substring(event.target.parent().parent().id.indexOf(_)+1));
