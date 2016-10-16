@@ -29,3 +29,5 @@ function playNoteSeries(instrument, notes){
 		
 		instrument.schedule(ac.currentTime, [{time:0, note: 60},{time: 3, note: 70}]);
 }
+);
+}
