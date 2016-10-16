@@ -65,6 +65,7 @@ function buildTable() {
     // add event listeners
     $(".clip").mousedown(startDragClip);
 //    $("#content").click(checkForAdd);
+	$('#playbutton').click(playAll());
 }
 
 // Plays the whole piece. Initiates all sound and moves the timer bar.
@@ -88,7 +89,6 @@ function stepTimerBar(){
 	$('#timerBar').velocity({left: "500px" },{duration:30000});
 }
 
-$('#playbutton').click(playAll());
 
 // clip constructor: a segment of sound (MIDI music, file audio)
 function Clip(id, startTime, duration, instrument) {
