@@ -21,7 +21,6 @@ function contactAPI(page, params){
 //const OBJECT_TYPES = ["Clips", "Instruments"];
 const PHP_OBJECT_COMMAND = "../Backend/objectcommand.php";
 function serverUpdate(type, id, data, callback) {
-    console.log(data);
     $.post(PHP_OBJECT_COMMAND,
            {"ACTION": "UPDATE",
             "CLASS": type,
