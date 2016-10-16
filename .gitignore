@@ -6,5 +6,6 @@
 !*.cgi
 !*.txt
 !.gitignore
+*.ini
 !/Backend/*
 !/Frontend/*

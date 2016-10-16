@@ -131,6 +131,7 @@ var startDragClip = (function() {
         oldMouseX = parseFloat(event[xVal]);
         oldInstrument = parseInt($clip.parentsUntil("#content").last()
                                  .attr("id").split("_")[1]);
+        var newX = -1;
         
         var $tempInstrument = $("#instrumentTemplate");
         instrumentHeight = $tempInstrument.height() +
@@ -140,7 +141,7 @@ var startDragClip = (function() {
         var mouseMove = function(event) {
             // Handle x movement
             var deltaX = event[xVal] - oldMouseX;
-            var newX = oldStartLeft + deltaX;
+            newX = oldStartLeft + deltaX;
             newX = Math.max(0, newX);
             $clip.css("left", newX + "px");
             
@@ -151,6 +152,8 @@ var startDragClip = (function() {
             if ($newInstrument != null) {
                 var newY = $newInstrument.position().top;
                 $clip.css("top", newY + "px");
+            } else {
+                $newInstrument = $clip.parentsUntil("#content").last();
             }
         };
         var end = function(event) {
@@ -158,7 +161,15 @@ var startDragClip = (function() {
             $(document).off("mouseup", end)
                 .off("mousemove", mouseMove);
             // Update the server
-            serverUpdate(OBJECT_CLIP, 
+            var instrID = parseInt($newInstrument.attr("id")
+                                   .split("_")[1]);
+            serverUpdate(OBJECT_CLIP,
+                         parseInt($clip.attr("id").split("_")[1]),
+                         {"Instrument": instrID,
+                          "startTime": parseInt(newX / timeScale)},
+                         function(response, status) {
+                alert(response + "\n\n" + status);
+            });
         };
         $(document).mousemove(mouseMove).mouseup(end);
     }

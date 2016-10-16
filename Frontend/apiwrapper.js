@@ -16,3 +16,14 @@ function contactAPI(page, params){
             ,
         })); 
 } 
+
+
+const OBJECT_TYPES = ["Clips", "Instruments"];
+function serverUpdate(type, id, data, callback) {
+    $.post("../Backend/objectcommand.php",
+           {"ACTION": "UPDATE",
+            "CLASS": type,
+            "ID": id,
+            "DATA": JSON.stringify(data)
+    }, callback, "json");
+}
