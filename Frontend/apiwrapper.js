@@ -18,12 +18,20 @@ function contactAPI(page, params){
 } 
 
 
-const OBJECT_TYPES = ["Clips", "Instruments"];
+//const OBJECT_TYPES = ["Clips", "Instruments"];
 function serverUpdate(type, id, data, callback) {
     $.post("../Backend/objectcommand.php",
            {"ACTION": "UPDATE",
             "CLASS": type,
             "ID": id,
-            "DATA": JSON.stringify(data)
-    }, callback, "json");
+            "DATA": JSON.stringify(data)},
+           callback, "json");
+}
+
+function serverCreate(type, id, callback) {
+    $.post("../Backend/objectommand.php",
+           {"ACTION": "CREATE",
+            "CLASS": type,
+            "ID": id},
+           callback, "json");
 }
