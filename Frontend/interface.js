@@ -306,7 +306,7 @@ function updateClipData(id, instrument, startTime, duration) {
 }
 
 function addNewClipObject(instrument, startTime, server) {
-    var id = getRandomInt(1, 10000000);
+    var id = 42;//getRandomInt(1, 10000000);
     
     var fpitch=window.prompt("your favorite sound ('E5', 'C7', etc.)");
     var ftime=window.prompt("your favorite starting time");
