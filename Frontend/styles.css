@@ -117,6 +117,9 @@ body {
 #clipAdd {
     left:75;
 }
+#newClip {
+    background:blue;
+}
 
 .button:hover {
     transform: scale(1.05);

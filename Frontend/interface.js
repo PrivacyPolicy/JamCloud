@@ -134,6 +134,7 @@ function stepTimerBar(){
 function stopAll(){
 	//"acoustic_grand_piano"
 	$('#timerBar').velocity('finish');
+	$('#timerBar').css('left', '200px');
 }
 
 // clip constructor: a segment of sound (MIDI music, file audio)
