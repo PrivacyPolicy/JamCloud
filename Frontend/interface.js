@@ -68,6 +68,7 @@ function buildTable() {
     $('#playButton').click(playAll);
     $('#stopButton').click(stopAll);
     $('#newInstr').click(createInstrument);
+    $('#instrumentRemove').click(deleteInstrument);
 
 }
 
@@ -153,6 +154,12 @@ function createInstrument(){
 	serverCreate("Instruments", instrument.id,{type:instrument.data.type, volume:instrument.data.volume, balance:instrument.data.volume} ,null);
 	addInstrument(instrument);
 	buildTable();
+}
+
+
+function deleteInstrument(event){
+	//event.
+	serverDelete("Instruments", instrument.id);
 }
 
 function addClip(clip) {
