@@ -4,7 +4,8 @@
    */
 include("./session.php");
 $g_timestamp = $_GET["TIMESTAMP"] or 0;
-$result = mysqli_query($link, "SELECT * FROM Updates WHERE TIMESTAMP >= $g_timestamp ORDER BY TIMESTAMP;");
+$result = mysqli_query($link, "SELECT * FROM Updates WHERE TIMESTAMP
+    >= $g_timestamp ORDER BY TIMESTAMP;");
 $rows;
 if (($rows = mysqli_fetch_array($result)) != false) {
     echo "[\n";

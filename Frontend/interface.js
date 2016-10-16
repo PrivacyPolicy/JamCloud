@@ -128,7 +128,7 @@ function waveClip(startTime, duration, instrument, fileURL) {
 // 
 function addInstrument(instrument) {
 
-    instrument.name=window.prompt("What kind of instrument would you like?","acoustic_grand_piano");
+   // instrument.name=window.prompt("What kind of instrument would you like?","acoustic_grand_piano");
     // Make a copy of the template
     var template = $("#instrumentTemplate").get(0).cloneNode(true);
     template.id = "instrument_" + instrument.id;
