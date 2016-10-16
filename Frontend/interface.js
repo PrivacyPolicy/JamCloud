@@ -263,7 +263,9 @@ function addNewClipObject(instrument, startTime) {
     data.clips.push({id: id, data: {
         instrument: instrument,
         startTime: startTime,
-        duration: DEFAULT_DURATION
+        duration: DEFAULT_DURATION,
+	type: "note",
+	contents: []
     }});
 }
     
