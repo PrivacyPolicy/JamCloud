@@ -95,6 +95,8 @@
 			$update_query= "UPDATE $g_table SET DATA='$data' WHERE ID=$id";
 			mysqli_query($link, $update_query);
             
+            addToUpdateTable();
+            
             return makeStatus("true", "Updated object $id via query $update_query");
             
 		}else{
