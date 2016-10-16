@@ -310,7 +310,7 @@ function addNewClipObject(instrument, startTime) {
 }
    
 function editClip(event){
-		console.log(event.target);
+		console.log(substring(event.target.id, indexOf('_')));
 }
  
 function getClipIndexForClipId(id) {
