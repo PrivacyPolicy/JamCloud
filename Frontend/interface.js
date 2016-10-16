@@ -1,6 +1,6 @@
 const OBJECT_CLIP = "Clips";
 const DEFAULT_DURATION = 2;
-const POLL_FREQUENCY = 5; // every 1 second
+const POLL_FREQUENCY = 1; // every 1 second
 var timeScale = 100; // 100 px / second
                      // future: px/beats
 var instrumentTypes = ["acoustic_grand_piano", "acoustic_guitar_steel",
@@ -269,15 +269,21 @@ var startDragClip = (function() {
                                          instrID,
                                          newX / timeScale,
                                          clipData.data.duration);
-            serverUpdate(OBJECT_CLIP,
-                         clipID,
-                         data.clips[clipInd].data,
-                         function(response, status) {
-                if (status != "success") {
-                    console.error("Some kind of weird error occurred");
-                }
-            });
-        };
+            $.ajax({url: "../Backend/objectcommand.php",
+                    type: "POST",
+                    data: $.param({ACTION: "UPDATE",
+                                    CLASS: "Clips",
+                                    ID: clipID,
+                                    DATA: JSON.stringify(clipData.data)
+                                  }),
+                   success: function(result, status) {
+                       console.log(result);
+                       console.log("Success sending clip data");
+                   },
+                   failure: function(result, status) {
+                       console.log("Failure sending clip data");
+                   }});
+            };
         $(document).mousemove(mouseMove).mouseup(end);
     }
     // find which instrument the y-position is referring to
@@ -318,18 +324,6 @@ function addNewClipObject(instrument, startTime, server) {
             console.log("OGIEHEOIEHG:EGP");
         });
     }
-//    if (server || server == undefined) {
-//        serverCreate("Clips", id, function(result, status) {
-//            if (status == "success") {
-//                serverUpdate("Clip", id, newClip.data, function(result,
-//                                                                 status) {
-//                    if (status == "success") {
-//                        console.log("Added a new clip succesfully!");
-//                    }
-//                });
-//            }
-//        });
-//    }
 }
    
 function editClip(event){
@@ -378,7 +372,7 @@ function everyXSeconds(x, func) {
 
 // poll the database occasionally to see what updates have occured:
 // any updates should be handled
-var lastTime = Math.floor(Date.now() / 1000);
+var lastTime = Date.now();
 function pollUpdates() {
     everyXSeconds(POLL_FREQUENCY, function() {
         $.get("../Backend/requestupdates.php?TIMESTAMP=" +
@@ -404,7 +398,7 @@ function pollUpdates() {
                 }
             }
         });
-        lastTime = Math.floor(Date.now() / 1000) - POLL_FREQUENCY * 3;
+        lastTime = Date.now() - POLL_FREQUENCY;
     });
 }
 
