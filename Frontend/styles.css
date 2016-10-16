@@ -18,6 +18,13 @@ body {
     
 }
 
+#instrumentRemove {
+	width: 15px;
+	height: 15px;
+	background:red;
+	z-index: 99999;
+}
+
 .instrument {
     position: relative;
     height: 60px;

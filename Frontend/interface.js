@@ -75,6 +75,7 @@ function buildTable() {
     $('#playButton').click(playAll);
     $('#stopButton').click(stopAll);
     $('#newInstr').click(createInstrument);
+    $('#instrumentRemove').click(deleteInstrument);
 
 }
 
@@ -113,26 +114,10 @@ function Clip(id, startTime, duration, instrument) {
     this.startTime = startTime;
     this.duration = duration;
     this.instrument = instrument;
+    this.type = note;
+    this.contents = [];
 }
-// a type of clip: specifically, it contains notes
-function noteClip(notes, instrument) {
-      //notes object should be of the form: notes = [{note: "C4", time: 1, duration: 1},{....}]
-	
-	    Clip.call(this);  
-	    this.notes = notes;
-		
-		this.addNote = function(newnote, newtime, newduration){
-			this.notes = this.notes.concat({note:newnote, time:newtime, duration:newduration });
-		}
-}
-
-function waveClip(startTime, duration, instrument, fileURL) {
-    Clip.call(this);
-    this.fileURL = fileURL;
-    // TODO cache the file
-}
-
-// 
+ 
 function addInstrument(instrument) {
 
     // Make a copy of the template
@@ -156,9 +141,16 @@ function createInstrument(){
 	"balance":0}};
 
 	instrument.type = window.prompt("What kind of instrument would you like?","acoustic_grand_piano");
-
+	
+	serverCreate("Instruments", instrument.id,{type:instrument.data.type, volume:instrument.data.volume, balance:instrument.data.volume} ,null);
 	addInstrument(instrument);
 	buildTable();
+}
+
+
+function deleteInstrument(event){
+	//event.
+	serverDelete("Instruments", instrument.id);
 }
 
 function addClip(clip) {
@@ -278,7 +270,9 @@ function addNewClipObject(instrument, startTime) {
     data.clips.push({id: id, data: {
         instrument: instrument,
         startTime: startTime,
-        duration: DEFAULT_DURATION
+        duration: DEFAULT_DURATION,
+	type: "note",
+	contents: []
     }});
 }
     
