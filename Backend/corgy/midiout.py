@@ -3,15 +3,14 @@
 from midiutil.MidiFile import MIDIFile
 import json
 class Note:
-	def __init__(self, pitch, time, duration):
+	def __init__(self, pitch, duration,time):
 		self.pitch = pitch;
 		self.time = time;
-		self.duration = duration;
+		self.duration = duration
 		
 class NoteClip:
-	def __init__(self, startTime, duration, notes):
+	def __init__(self, startTime,notes):
 		self.startTime = startTime
-		self.duration = duration
 		self.notes = notes
 def _createRawMIDI(filename,clips):
 	channel = 0;
@@ -24,12 +23,31 @@ def _createRawMIDI(filename,clips):
 	for clip in clips:
 		channel = (channel + 1)%16
 		for note in clip.notes:
-			time = note.time + clip.startTime
+			print(note.time);
+			print(note.duration);
+			print(note.pitch);
+			print(clip.startTime);
+			time = int(note.time) + int(clip.startTime)
+			print("Oh")
 			duration = note.duration
 			pitch = note.pitch
-			outfile.addNote(track,channel,pitch,time,duration,volume);
+			print("About to out")
+			print(track)
+			print(channel)
+			print(pitch)
+			print(time)
+			print(duration)
+			print(volume)
+			outfile.addNote(int(track),int(channel),int(pitch),int(time),int(duration),int(volume));
+			print("Outing")
+	print("Still unwritten")
 	with open(filename,"wb") as written_file:
+		print(type(filename))
+		print(type(outfile))
+		print(type(written_file))
 		outfile.writeFile(written_file)
+		print("Almost Written")
+	print("Not unwritten")
 
 def createMIDI(filename, j = '{"0":{"startTime": 0, "duration": 5,"notes":{"0":{"pitch":65, "time":1,"duration":6}}}}'):
 	x = json.loads(j)
@@ -44,10 +62,14 @@ def createMIDI(filename, j = '{"0":{"startTime": 0, "duration": 5,"notes":{"0":{
 			for nkey in nkeys:
 				note = clip["contents"][nkey]
 				notes.append(Note(note["pitch"],note["time"],note["duration"]));
-			clips.append(NoteClip(clip["startTime"],clip["duration"],notes))
+			clips.append(NoteClip(clip["startTime"],notes))
 		except Exception as e:
-			print("Unhelpful error message" % e)
+			print("Unhelpful error");
+			print(e)
+			print("Message")
 	print("about ot create");	
+	print(filename);
+	print(clips)
 	_createRawMIDI(filename,clips)
 
 
