@@ -57,6 +57,8 @@
 			return makeStatus("false", "Failed to delete object");
 		}
 	}
+
+	/*Tell the server that you'd like control of a particular object*/
 	function requestEditObject($id, $ip){
 		global $link;
 		global $g_table;
@@ -68,6 +70,8 @@
 			return makeStatus("false","Request permission denied");
 		}
 	}
+
+	/*Tell the server that you're done with a particular object*/
 	function quitEditObject($id, $ip){
 		global $link;
 		global $g_table;
@@ -82,7 +86,8 @@
 			return makeStatus("false", "Permission for object $id is not granted to $ip");
 		}
 	}
-		
+	
+	/*transfers an objects (instrument or clip in this case) changed data. This reduces the amount to be transfered*/
 	function updateObject($id, $ip, $data){
 		global $link;
 		global $g_table;
