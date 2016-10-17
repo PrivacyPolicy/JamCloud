@@ -1,49 +1,47 @@
 body {
-    font-family: "Ubuntu", "Roboto", sans-serif;
-    background: honeydew;
-    color: aquamarine;
-    overflow: scroll;
-    -webkit-user-select: none;
+	font-family: "Ubuntu", "Roboto", sans-serif;
+	background: honeydew;
+	color: aquamarine;
+	overflow: scroll;
+	-webkit-user-select: none;
 }
 
 .hidden {
-    display: none;
+	display: none;
 }
 
 #content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
 }
 
-#instrumentRemove {
+.instrumentRemove {
 	width: 15px;
 	height: 15px;
-	background:red;
+	background: red;
 	z-index: 99999;
 	font-size: 15px;
 	line-height: 9px;
 }
 
 .instrument {
-    position: relative;
-    height: 60px;
-    /*border-bottom: 4px solid rgba(0, 0, 0, .1);*/
-    margin-bottom: 4px;
+	position: relative;
+	height: 60px;
+	/*border-bottom: 4px solid rgba(0, 0, 0, .1);*/
+	margin-bottom: 4px;
 }
 
 .instrumentSettings {
-    position: fixed;
-    left: 0;
-    width: calc(200px - 4px);
-    height: 60px;
-    z-index: 99999;
-    
-    background: grey;
-    background: linear-gradient(to bottom, grey, #111);
-    box: 2px 0 5px rgba(0, 0, 0, 1);
+	position: fixed;
+	left: 0;
+	width: calc(200px -   4px);
+	height: 60px;
+	z-index: 99999;
+	background: grey;
+	background: linear-gradient(to bottom, grey, #111);
+	box: 2px 0 5px rgba(0, 0, 0, 1);
 }
 /* .instrumentSettings > .text {} *** defined below *** */
 
@@ -52,93 +50,89 @@ body {
     width: 1px;
     background: black;
 }*/
-
 .clipTimeline {
-    position: absolute;
-    height: 100%;
-    width: calc(100% - 200px);
-    left: 200px;
+	position: absolute;
+	height: 100%;
+	width: calc(100% -   200px);
+	left: 200px;
 }
 
 #timerBar {
-    position: absolute;
-    height: 100%;
-    width: 2px;
-    left: 200px;
-    z-index: 99999;
-    top: 0;
-    background: black;
+	position: absolute;
+	height: 100%;
+	width: 2px;
+	left: 200px;
+	z-index: 99999;
+	top: 0;
+	background: black;
 }
 
 .clip {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    border-radius: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    
-    /* fancy styles */
-    background: blue;
-    background: linear-gradient(to bottom,
-        #0058ff, #2900cc);
-    box-shadow: 0 0 15px rgba(0, 0, 0, .3);
-    transition: transform .5s, box-shadow .5s, top .3s;
+	position: absolute;
+	top: 0;
+	height: 100%;
+	border-radius: 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/* fancy styles */
+	background: blue;
+	background: linear-gradient(to bottom, #0058ff, #2900cc);
+	box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+	transition: transform .5s, box-shadow .5s, top .3s;
 }
-.clip.dragging {
-    /*transform: scale(1.01);*/
-    box-shadow: 4px 4px 20px rgba(0, 0, 0, .2);
-    z-index: 99998 !important;
+
+.clip.dragging { /*transform: scale(1.01);*/
+	box-shadow: 4px 4px 20px rgba(0, 0, 0, .2);
+	z-index: 99998 !important;
 }
-.clip > .text, .instrumentSettings > .text {
-    padding: 5px;
-    line-height: calc(60px - 2 * 5px);
-    pointer-events: none;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+
+.clip>.text,.instrumentSettings>.text {
+	padding: 5px;
+	line-height: calc(60px -   2 *   5px);
+	pointer-events: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 #newInstr {
-    border-radius: 50%;
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, .5);
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    font-size: 25px;
-    background: red;
-    cursor: pointer;
-    
-    transition: box-shadow .5s, transform .5s;
+	border-radius: 50%;
+	box-shadow: 4px 4px 15px rgba(0, 0, 0, .5);
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-size: 25px;
+	background: red;
+	cursor: pointer;
+	transition: box-shadow .5s, transform .5s;
 }
 
 #newClip {
-    border-radius: 50%;
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, .5);
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    font-size: 25px;
-    position: relative;
-
-    right:50;
-    background:blue;
-    cursor: pointer;
+	border-radius: 50%;
+	box-shadow: 4px 4px 15px rgba(0, 0, 0, .5);
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-size: 25px;
+	position: relative;
+	right: 50;
+	background: blue;
+	cursor: pointer;
 }
 
 .button:hover {
-    transform: scale(1.05);
-    box-shadow: 6px 6px 20px rgba(0, 0, 0, .4);
+	transform: scale(1.05);
+	box-shadow: 6px 6px 20px rgba(0, 0, 0, .4);
 }
 
 #controls {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 80px;
-    background: blue;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 80px;
+	background: blue;
 }
