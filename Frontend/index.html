@@ -1,54 +1,56 @@
 <!DOCTYPE html>
 <html lang=en>
-
-<head>
-<meta charset=utf-8>
-<title>JamCloud</title>
-<link rel="shortcut icon" href=favicon.png />
-
-<script src="soundfont-player.js"></script>
-<script src=jquery.min.js></script>
-<script src=apiwrapper.js></script>
-<script src=interface.js></script>
-<script src=sounds.js></script>
-<script src=velocity.min.js></script>
-
-<link href="https://fonts.googleapis.com/css?family=Ubuntu"
-	rel="stylesheet">
-<link rel=stylesheet href=styles.css>
-</head>
-
-<body>
-	<div id=content>
-		<!-- Instrument bars adding and add buttons -->
-		<div id="timerBar" class=persistant></div>
-		<div id=instrumentAdd class="instrument persistant">
-			<div id=newInstr class=button>+</div>
-		</div>
-		<div id=clipAdd class="persistant">
-			<div id=newClip class=button>+</div>
-		</div>
-		
-		
-		<div id=instrumentTemplate class="instrument persistant hidden">
-			<div class=instrumentSettings>
-				<div class=instrumentRemove class=button style=>X</div>
-				<div class=text></div>
-			</div>
-			<div class=clipTimeline></div>
-		</div>
-		
-		<div id=clipTemplate class="clip persistant hidden">
-			<div class=text></div>
-		</div>
-	</div>
+    <head>
+        <meta charset=utf-8>
+        <title>JamCloud</title>
+        <link rel="shortcut icon" href=favicon.png />
+        
+        <script src="soundfont-player.js"></script>
+        <script src=jquery.min.js></script>
+        <script src=apiwrapper.js></script>
+        <script src=interface.js></script>
+        <script src=sounds.js></script>
+	<script src=velocity.min.js></script>
+        
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu"
+              rel="stylesheet">
+        <!--<link href="https://fonts.googleapis.com/css?family=Roboto"
+              rel="stylesheet">-->
+        <link rel=stylesheet href=styles.css>
+    </head>
+    <body>
+        
 	
-	
-	<div id=controls>
-		BPM: <input type=number size=4 id=bpm>
-		<button id=playButton>&gt;</button>
-		<button id=stopButton>X</button>
-	</div>
 
-</body>
+        <div id=content>
+	    <div id="timerBar" class=persistant></div>
+            <div id=instrumentAdd
+                 class="instrument persistant">
+                <div id=newInstr class=button>+</div>
+            </div>
+	    <div id=clipAdd class="persistant">
+                <div id=newClip class=button>+</div>
+            </div>
+            <div id=instrumentTemplate
+                 class="instrument persistant hidden">
+                <div class=instrumentSettings>
+ 		    <div id=instrumentRemove class=button style=>X</div>
+                    <div class=text></div>
+		  
+                </div>
+		
+                <div class=clipTimeline></div>
+            </div>
+            <div id=clipTemplate class="clip persistant hidden">
+                <div class=text></div>
+            </div>
+
+        </div>
+        <div id=controls>
+            BPM: <input type=number size=4 id=bpm>
+            <button id=playButton>&gt;</button>
+	    <button id=stopButton>X</button>
+        </div>
+        
+    </body>
 </html>

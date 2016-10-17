@@ -1,6 +1,6 @@
 <html>
 <body>
-
+hey
 <?php
 
 /* This file exists to create the database tables automatically */

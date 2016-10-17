@@ -52,4 +52,3 @@ function serverExportMIDI(name, data, callback) {
 	"DATA": JSON.stringify(data)},
 	callback, "json");
 }
-
